@@ -10,6 +10,7 @@ import DAO.DAOResidencias;
 import Model.Residencias;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -18,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
  * @author tiago
  */
 public class UIResidencias extends javax.swing.JInternalFrame implements Observer {
+
     private static UIResidencias uiresidencias;
     private ControllerResidencias controller;
     private Residencias residencias = null;
@@ -35,9 +37,10 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
         }
         return uiresidencias;
     }
-    
+
     public UIResidencias() {
         initComponents();
+        padrao();
     }
 
     public void setController(ControllerResidencias _controller) {
@@ -55,23 +58,73 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
             this.txtNumero.setText(String.valueOf(r.getNumero()));
         }
     }
-    
+
     public void readJTable() {
         DefaultTableModel modelo = (DefaultTableModel) tblList.getModel();
         modelo.setNumRows(0);
         DAOResidencias r = new DAOResidencias();
     }
-    
+
     public void preenche() {
         txtRua.setText(tblList.getValueAt(tblList.getSelectedRow(), 1).toString());
         txtNumero.setText(tblList.getValueAt(tblList.getSelectedRow(), 2).toString());
     }
-    
-    public void limpar() {
-        txtRua.setText("");
-        txtNumero.setText("");
+
+    public void padrao() {
+        btnNovo.setEnabled(true);
+        btnSalvar.setEnabled(false);
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        btnCalcelar.setEnabled(true);
+
+        txtRua.setEnabled(false);
+        txtNumero.setEditable(false);
+    }
+
+    public void novo() {
+        btnNovo.setEnabled(false);
+        btnSalvar.setEnabled(true);
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        btnCalcelar.setEnabled(true);
+
+        txtRua.setEnabled(true);
+        txtNumero.setEditable(true);
     }
     
+    public void alterar(){
+        btnNovo.setEnabled(true);
+        btnSalvar.setEnabled(false);
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        btnCalcelar.setEnabled(true);
+
+        txtRua.setEnabled(false);
+        txtNumero.setEditable(false);
+    }
+    
+    public void excluir(){
+        btnNovo.setEnabled(true);
+        btnSalvar.setEnabled(false);
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        btnCalcelar.setEnabled(true);
+
+        txtRua.setEnabled(false);
+        txtNumero.setEditable(false);
+    }
+    
+    public void tabela(){
+        btnNovo.setEnabled(true);
+        btnSalvar.setEnabled(false);
+        btnAlterar.setEnabled(true);
+        btnExcluir.setEnabled(true);
+        btnCalcelar.setEnabled(true);
+
+        txtRua.setEnabled(true);
+        txtNumero.setEditable(true);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -85,13 +138,14 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
         tblList = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         txtRua = new javax.swing.JTextField();
-        txtNumero = new javax.swing.JFormattedTextField();
         btnSalvar = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         btnCalcelar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        txtNumero = new javax.swing.JFormattedTextField();
+        btnNovo = new javax.swing.JButton();
 
         setTitle("Cadastro de Residencias");
 
@@ -156,6 +210,15 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
 
         jLabel2.setText("Numero: *");
 
+        txtNumero.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+
+        btnNovo.setText("NOVO");
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -163,24 +226,30 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
+                    .addComponent(txtRua, javax.swing.GroupLayout.DEFAULT_SIZE, 543, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txtRua))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnNovo)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(31, 31, 31)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel2)
+                        .addGap(31, 31, 31))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCalcelar)))
-                .addContainerGap())
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnCalcelar, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtNumero, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,7 +267,8 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
                     .addComponent(btnAlterar)
                     .addComponent(btnExcluir)
                     .addComponent(btnSalvar)
-                    .addComponent(btnCalcelar))
+                    .addComponent(btnCalcelar)
+                    .addComponent(btnNovo))
                 .addContainerGap())
         );
 
@@ -227,72 +297,99 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        if (this.residencias == null) {
-            controller.insertResidencias(txtRua.getText(), Integer.parseInt(txtNumero.getText()));
-            JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!!");
+        ImageIcon warning = new ImageIcon("src/img/warning.png");
+        ImageIcon info = new ImageIcon("src/img/info.png");
+        if (txtRua.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Campo RUA : Obrigatório!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE, warning);
+        } else if (txtNumero.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Campo NÚMERO: Obrigatório!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE, warning);
         } else {
-            this.residencias.setRua(txtRua.getText());
-            this.residencias.setNumero(Integer.parseInt(txtNumero.getText()));
-
-            controller.updateResidencias(this.residencias);
-            //JOptionPane.showMessageDialog(null, "2");
-        }
-        refreshTable();
-    }//GEN-LAST:event_btnSalvarActionPerformed
-
-    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        int selected = this.tblList.getSelectedRow();
-        if (selected < 0) {
-            JOptionPane.showMessageDialog(this, "Selecione um registro");
-        } else {
-                int id = (int) this.tblList.getValueAt(selected,0);
-                this.residencias = new Residencias();
-                this.residencias.setId(id);
+            if (this.residencias == null) {
+                controller.insertResidencias(txtRua.getText(), txtNumero.getText());
+                refreshTable();
+                txtRua.setText("");
+                txtNumero.setText("");
+                padrao();
+                JOptionPane.showMessageDialog(rootPane, "Salvo com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE, info);
+            } else {
                 this.residencias.setRua(txtRua.getText());
-                this.residencias.setNumero(Integer.parseInt(txtNumero.getText()));
+                this.residencias.setNumero(txtNumero.getText());
 
                 controller.updateResidencias(this.residencias);
-                JOptionPane.showMessageDialog(null, "Alterado com Sucesso!!");
-            
+                JOptionPane.showMessageDialog(null, "Erro");
+            }
+
+    }//GEN-LAST:event_btnSalvarActionPerformed
+    }
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        ImageIcon warning = new ImageIcon("src/img/warning.png");
+        ImageIcon info = new ImageIcon("src/img/info.png");
+        int selected = this.tblList.getSelectedRow();
+        if (selected < 0) {
+            JOptionPane.showMessageDialog(rootPane, "Selecione um registo!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE, warning);
+        } else {
+            int id = (int) this.tblList.getValueAt(selected, 0);
+            this.residencias = new Residencias();
+            this.residencias.setId(id);
+            this.residencias.setRua(txtRua.getText());
+            this.residencias.setNumero(txtNumero.getText());
+
+            controller.updateResidencias(this.residencias);
+            txtRua.setText("");
+            txtNumero.setText("");
             refreshTable();
+            alterar();
+            JOptionPane.showMessageDialog(rootPane, "Alterado com sucesso! com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE, info);
         }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        ImageIcon warning = new ImageIcon("src/img/warning.png");
+        ImageIcon info = new ImageIcon("src/img/info.png");
         int selected = this.tblList.getSelectedRow();
         if (selected < 0) {
-            JOptionPane.showMessageDialog(this, "Selecione um registro");
+            JOptionPane.showMessageDialog(rootPane, "Selecione um registro!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE, warning);
             return;
         }
         int id = (int) this.tblList.getValueAt(selected, 0);
         String rua = (String) this.tblList.getValueAt(selected, 1);
-        int numero = (int) this.tblList.getValueAt(selected, 2);
-        int x = JOptionPane.showConfirmDialog(
-                this, "Deseja deletar " + rua + " - " + numero + " ?", "Atenção",
-                JOptionPane.OK_CANCEL_OPTION);
+        String numero = (String) this.tblList.getValueAt(selected, 2);
+        int x = JOptionPane.showConfirmDialog(rootPane, "Deseja deletar " + rua + " - " + numero + " ?", "ATENÇÃO", JOptionPane.OK_CANCEL_OPTION, HEIGHT, warning);
         if (x == 0) {
             this.controller.deletaResidencias(id);
             this.refreshTable();
+            txtRua.setText("");
+            txtNumero.setText("");
+            excluir();
+            JOptionPane.showMessageDialog(rootPane, "Deletado com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE, info);
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnCalcelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcelarActionPerformed
+        txtRua.setText("");
+        txtNumero.setText("");
         this.dispose();
     }//GEN-LAST:event_btnCalcelarActionPerformed
 
     private void tblListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblListMouseClicked
         preenche();
+        tabela();
     }//GEN-LAST:event_tblListMouseClicked
 
     private void clica(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clica
         this.tblList.editingCanceled(null);
     }//GEN-LAST:event_clica
 
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        novo();
+    }//GEN-LAST:event_btnNovoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnCalcelar;
     private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

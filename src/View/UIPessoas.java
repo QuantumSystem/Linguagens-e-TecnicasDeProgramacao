@@ -6,15 +6,11 @@
 package View;
 
 import Controller.ControllerPessoas;
-import DAO.DAOPessoas;
 import Model.Pessoas;
-import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -270,7 +266,7 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
         ImageIcon warning = new ImageIcon("src/img/warning.png");
         ImageIcon info = new ImageIcon("src/img/info.png");
         if (txtNome.getText().trim().equals("")) {
-            JOptionPane.showMessageDialog(rootPane, "Campo Nome: OBRIGATÓRIO", "ATENÇÃO", JOptionPane.WARNING_MESSAGE, warning);
+            JOptionPane.showMessageDialog(rootPane, "Campo NOME: Obrigatório", "ATENÇÃO", JOptionPane.WARNING_MESSAGE, warning);
         } else {
             if (this.pessoas == null) {
                 controller.insertPessoas(txtNome.getText(), txtRg.getText(), txtCpf.getText(), txtTelefone.getText(), txtCelular.getText());
@@ -289,9 +285,11 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        ImageIcon warning = new ImageIcon("src/img/warning.png");
+        ImageIcon info = new ImageIcon("src/img/info.png");
         int selected = this.tblList.getSelectedRow();
         if (selected < 0) {
-            JOptionPane.showMessageDialog(this, "Selecione um registro");
+            JOptionPane.showMessageDialog(rootPane, "Selecione um registro!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE, warning);
         } else {
             int id = (int) this.tblList.getValueAt(selected, 0);
             this.pessoas = new Pessoas();
@@ -303,26 +301,27 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
             this.pessoas.setCelular(txtCelular.getText());
 
             controller.updatePessoas(this.pessoas);
-            JOptionPane.showMessageDialog(null, "Alterado com Sucesso!!");
+            JOptionPane.showMessageDialog(rootPane, "Alterado com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE, info);
 
             refreshTable();
         }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        ImageIcon warning = new ImageIcon("src/img/warning.png");
+        ImageIcon info = new ImageIcon("src/img/info.png");
         int selected = this.tblList.getSelectedRow();
         if (selected < 0) {
-            JOptionPane.showMessageDialog(this, "Selecione um registro");
+            JOptionPane.showMessageDialog(rootPane, "Selecione um registro!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE, warning);
             return;
         }
         int id = (int) this.tblList.getValueAt(selected, 0);
         String nome = (String) this.tblList.getValueAt(selected, 1);
-        int x = JOptionPane.showConfirmDialog(
-                this, "Deseja deletar " + nome + " ?", "Atenção",
-                JOptionPane.OK_CANCEL_OPTION);
+        int x = JOptionPane.showConfirmDialog(rootPane, "Deseja deletar o : " + nome + " ?", "ATENÇÃO", JOptionPane.OK_CANCEL_OPTION, HEIGHT, warning);
         if (x == 0) {
             this.controller.deletaPessoas(id);
             this.refreshTable();
+            JOptionPane.showMessageDialog(rootPane, "Deletado com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE, info);
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 

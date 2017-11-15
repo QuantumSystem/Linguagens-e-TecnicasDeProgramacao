@@ -39,7 +39,7 @@ public class ControllerResidencias extends Observable{
         return modelo;
     }
     
-    public void insertResidencias(String rua, int numero) {
+    public void insertResidencias(String rua, String numero) {
         DAOResidencias dao = new DAOResidencias();
         Residencias r = new Residencias();
         r.setRua(rua);

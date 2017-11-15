@@ -30,7 +30,7 @@ public class DAOResidencias {
                 r = new Residencias();
                 r.setId(rs.getInt("id"));
                 r.setRua(rs.getString("rua"));
-                r.setNumero(rs.getInt("numero"));
+                r.setNumero(rs.getString("numero"));
                 lista.add(r);
             }
         }
@@ -52,7 +52,7 @@ public class DAOResidencias {
                 r = new Residencias();
                 r.setId(rs.getInt("id"));
                 r.setRua(rs.getString("rua"));
-                r.setNumero(rs.getInt("numero"));
+                r.setNumero(rs.getString("numero"));
             }
         }
         catch (SQLException ex) {

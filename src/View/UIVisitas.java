@@ -370,7 +370,7 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
         ImageIcon info = new ImageIcon("src/img/info.png");
         int selected = this.tblList3.getSelectedRow();
         if (selected < 0) {
-            JOptionPane.showMessageDialog(rootPane, "Selevione um registro!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE, info);
+            JOptionPane.showMessageDialog(rootPane, "Selecione um registro!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE, warning);
             return;
         }
         int id = (int) this.tblList3.getValueAt(selected, 0);

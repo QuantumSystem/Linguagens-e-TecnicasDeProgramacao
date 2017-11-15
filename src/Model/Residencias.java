@@ -12,7 +12,7 @@ package Model;
 public class Residencias {
     private int id;
     private String rua;
-    private int numero;
+    private String numero;
 
     public int getId() {
         return id;
@@ -27,17 +27,17 @@ public class Residencias {
     }
 
     public void setRua(String rua) {
-        this.rua = rua;
+        this.rua = rua.toUpperCase();
     }
 
-    public int getNumero() {
+    public String getNumero() {
         return numero;
     }
 
-    public void setNumero(int numero) {
+    public void setNumero(String numero) {
         this.numero = numero;
     }
-    
+
     public String toString(){
         return getRua() + " Nº: "+this.getNumero();
     }
