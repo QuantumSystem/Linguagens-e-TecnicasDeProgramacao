@@ -38,8 +38,8 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
 
     public UIPessoas() {
         initComponents();
+        padrao();
     }
-    
 
     public void setController(ControllerPessoas _controller) {
         this.controller = _controller;
@@ -57,6 +57,84 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
         txtCelular.setText(tblList.getValueAt(tblList.getSelectedRow(), 5).toString());
     }
 
+    public void padrao() {
+        btnNovo.setEnabled(true);
+        btnSalvar.setEnabled(false);
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        btnCancelar.setEnabled(true);
+
+        txtNome.setEnabled(false);
+        txtRg.setEditable(false);
+        txtCpf.setEditable(false);
+        txtTelefone.setEditable(false);
+        txtCelular.setEditable(false);
+    }
+
+    public void novo() {
+        btnNovo.setEnabled(false);
+        btnSalvar.setEnabled(true);
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        btnCancelar.setEnabled(true);
+
+        txtNome.setEnabled(true);
+        txtRg.setEditable(true);
+        txtCpf.setEditable(true);
+        txtTelefone.setEditable(true);
+        txtCelular.setEditable(true);
+    }
+
+    public void alterar() {
+        btnNovo.setEnabled(true);
+        btnSalvar.setEnabled(false);
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        btnCancelar.setEnabled(true);
+
+        txtNome.setEnabled(false);
+        txtRg.setEditable(false);
+        txtCpf.setEditable(false);
+        txtTelefone.setEditable(false);
+        txtCelular.setEditable(false);
+    }
+
+    public void excluir() {
+        btnNovo.setEnabled(true);
+        btnSalvar.setEnabled(false);
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        btnCancelar.setEnabled(true);
+
+        txtNome.setEnabled(false);
+        txtRg.setEditable(false);
+        txtCpf.setEditable(false);
+        txtTelefone.setEditable(false);
+        txtCelular.setEditable(false);
+    }
+
+    public void tabela() {
+        btnNovo.setEnabled(true);
+        btnSalvar.setEnabled(false);
+        btnAlterar.setEnabled(true);
+        btnExcluir.setEnabled(true);
+        btnCancelar.setEnabled(true);
+
+        txtNome.setEnabled(true);
+        txtRg.setEditable(true);
+        txtCpf.setEditable(true);
+        txtTelefone.setEditable(true);
+        txtCelular.setEditable(true);
+    }
+
+    public void limpaCampo() {
+        txtNome.setText("");
+        txtRg.setText("");
+        txtCpf.setText("");
+        txtTelefone.setText("");
+        txtCelular.setText("");
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -72,17 +150,18 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
         txtNome = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txtTelefone = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        txtCelular = new javax.swing.JTextField();
-        txtRg = new javax.swing.JTextField();
-        txtCpf = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        txtTelefone = new javax.swing.JFormattedTextField();
+        txtCelular = new javax.swing.JFormattedTextField();
+        txtCpf = new javax.swing.JFormattedTextField();
+        txtRg = new javax.swing.JFormattedTextField();
         btnSalvar = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        btnNovo = new javax.swing.JButton();
 
         setTitle("Cadastro de Pessoas");
 
@@ -126,6 +205,30 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
 
         jLabel3.setText("CPF:");
 
+        try {
+            txtTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) ####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            txtCelular.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            txtCpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###.##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            txtRg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###-#")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -133,33 +236,26 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(txtRg)
-                        .addComponent(txtNome, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING))
-                    .addComponent(jLabel2))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(txtRg, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(75, 75, 75)))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(92, 92, 92))
-                            .addComponent(txtCelular))
-                        .addGap(118, 118, 118))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(jLabel4)
+                    .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(txtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,22 +265,22 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(29, 29, 29))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtRg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtRg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -216,6 +312,13 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
             }
         });
 
+        btnNovo.setText("Novo");
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -225,6 +328,8 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnNovo)
+                        .addGap(18, 18, 18)
                         .addComponent(btnSalvar)
                         .addGap(18, 18, 18)
                         .addComponent(btnAlterar)
@@ -232,7 +337,7 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
                         .addComponent(btnExcluir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCancelar))
-                    .addComponent(jScrollPane1))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 694, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -245,7 +350,8 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
                     .addComponent(btnSalvar)
                     .addComponent(btnAlterar)
                     .addComponent(btnExcluir)
-                    .addComponent(btnCancelar))
+                    .addComponent(btnCancelar)
+                    .addComponent(btnNovo))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -255,10 +361,14 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblListMouseClicked
+        limpaCampo();
         preenche();
+        tabela();
     }//GEN-LAST:event_tblListMouseClicked
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        limpaCampo();
+        padrao();
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -270,6 +380,9 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
         } else {
             if (this.pessoas == null) {
                 controller.insertPessoas(txtNome.getText(), txtRg.getText(), txtCpf.getText(), txtTelefone.getText(), txtCelular.getText());
+                limpaCampo();
+                padrao();
+                refreshTable();
                 JOptionPane.showMessageDialog(rootPane, "Salvo com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE, info);
             } else {
                 this.pessoas.setNome(txtNome.getText());
@@ -277,10 +390,10 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
                 this.pessoas.setCpf(txtCpf.getText());
                 this.pessoas.setTelefone(txtTelefone.getText());
                 this.pessoas.setCelular(txtCelular.getText());
-
                 controller.updatePessoas(this.pessoas);
+                JOptionPane.showMessageDialog(null, "Erro");
             }
-            refreshTable();
+            //refreshTable();
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -301,9 +414,10 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
             this.pessoas.setCelular(txtCelular.getText());
 
             controller.updatePessoas(this.pessoas);
-            JOptionPane.showMessageDialog(rootPane, "Alterado com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE, info);
-
+            limpaCampo();
             refreshTable();
+            alterar();
+            JOptionPane.showMessageDialog(rootPane, "Alterado com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE, info);
         }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
@@ -321,6 +435,8 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
         if (x == 0) {
             this.controller.deletaPessoas(id);
             this.refreshTable();
+            limpaCampo();
+            excluir();
             JOptionPane.showMessageDialog(rootPane, "Deletado com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE, info);
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
@@ -328,6 +444,11 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
     private void clica(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clica
         this.tblList.editingCanceled(null);
     }//GEN-LAST:event_clica
+
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        limpaCampo();
+        novo();
+    }//GEN-LAST:event_btnNovoActionPerformed
 
     @Override
     public void update(Observable o, Object arg) {
@@ -339,6 +460,7 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -348,10 +470,10 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblList;
-    private javax.swing.JTextField txtCelular;
-    private javax.swing.JTextField txtCpf;
+    private javax.swing.JFormattedTextField txtCelular;
+    private javax.swing.JFormattedTextField txtCpf;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JTextField txtRg;
-    private javax.swing.JTextField txtTelefone;
+    private javax.swing.JFormattedTextField txtRg;
+    private javax.swing.JFormattedTextField txtTelefone;
     // End of variables declaration//GEN-END:variables
 }

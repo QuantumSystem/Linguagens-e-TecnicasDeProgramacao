@@ -26,6 +26,8 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
 
     /**
      * Creates new form UIResidencias
+     *
+     * @return
      */
     public static UIResidencias getInstancia() {
         if (uiresidencias == null) {
@@ -65,7 +67,7 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
         DAOResidencias r = new DAOResidencias();
     }
 
-    public void preenche() {
+    public void populaTabela() {
         txtRua.setText(tblList.getValueAt(tblList.getSelectedRow(), 1).toString());
         txtNumero.setText(tblList.getValueAt(tblList.getSelectedRow(), 2).toString());
     }
@@ -91,8 +93,8 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
         txtRua.setEnabled(true);
         txtNumero.setEditable(true);
     }
-    
-    public void alterar(){
+
+    public void alterar() {
         btnNovo.setEnabled(true);
         btnSalvar.setEnabled(false);
         btnAlterar.setEnabled(false);
@@ -102,8 +104,8 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
         txtRua.setEnabled(false);
         txtNumero.setEditable(false);
     }
-    
-    public void excluir(){
+
+    public void excluir() {
         btnNovo.setEnabled(true);
         btnSalvar.setEnabled(false);
         btnAlterar.setEnabled(false);
@@ -113,8 +115,8 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
         txtRua.setEnabled(false);
         txtNumero.setEditable(false);
     }
-    
-    public void tabela(){
+
+    public void tabela() {
         btnNovo.setEnabled(true);
         btnSalvar.setEnabled(false);
         btnAlterar.setEnabled(true);
@@ -123,6 +125,11 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
 
         txtRua.setEnabled(true);
         txtNumero.setEditable(true);
+    }
+
+    public void limpaCampo() {
+        txtRua.setText("");
+        txtNumero.setText("");
     }
 
     /**
@@ -301,14 +308,13 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
         ImageIcon info = new ImageIcon("src/img/info.png");
         if (txtRua.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Campo RUA : Obrigatório!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE, warning);
-        } else if (txtNumero.getText().trim().equals("")) {
+        } else if (txtNumero.getText().equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Campo NÚMERO: Obrigatório!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE, warning);
         } else {
             if (this.residencias == null) {
                 controller.insertResidencias(txtRua.getText(), txtNumero.getText());
                 refreshTable();
-                txtRua.setText("");
-                txtNumero.setText("");
+                limpaCampo();
                 padrao();
                 JOptionPane.showMessageDialog(rootPane, "Salvo com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE, info);
             } else {
@@ -335,8 +341,7 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
             this.residencias.setNumero(txtNumero.getText());
 
             controller.updateResidencias(this.residencias);
-            txtRua.setText("");
-            txtNumero.setText("");
+            limpaCampo();
             refreshTable();
             alterar();
             JOptionPane.showMessageDialog(rootPane, "Alterado com sucesso! com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE, info);
@@ -358,21 +363,21 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
         if (x == 0) {
             this.controller.deletaResidencias(id);
             this.refreshTable();
-            txtRua.setText("");
-            txtNumero.setText("");
+            limpaCampo();
             excluir();
             JOptionPane.showMessageDialog(rootPane, "Deletado com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE, info);
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnCalcelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcelarActionPerformed
-        txtRua.setText("");
-        txtNumero.setText("");
+        limpaCampo();
+        padrao();
         this.dispose();
     }//GEN-LAST:event_btnCalcelarActionPerformed
 
     private void tblListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblListMouseClicked
-        preenche();
+        limpaCampo();
+        populaTabela();
         tabela();
     }//GEN-LAST:event_tblListMouseClicked
 
@@ -381,6 +386,7 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
     }//GEN-LAST:event_clica
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        limpaCampo();
         novo();
     }//GEN-LAST:event_btnNovoActionPerformed
 

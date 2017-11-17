@@ -46,10 +46,76 @@ public class UIVeiculos extends javax.swing.JInternalFrame implements Observer {
         this.tblList.setModel(this.controller.getAllTable());
     }
 
-    public void preenche() {
+    public void populaCampos() {
         txtNome.setText(tblList.getValueAt(tblList.getSelectedRow(), 1).toString());
         txtPlaca.setText(tblList.getValueAt(tblList.getSelectedRow(), 2).toString());
         txtCor.setText(tblList.getValueAt(tblList.getSelectedRow(), 3).toString());
+    }
+    
+    public void padrao() {
+        btnNovo.setEnabled(true);
+        btnSalvar.setEnabled(false);
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        btnCancelar.setEnabled(true);
+
+        txtNome.setEnabled(false);
+        txtPlaca.setEditable(false);
+        txtCor.setEditable(false);
+    }
+
+    public void novo() {
+        btnNovo.setEnabled(false);
+        btnSalvar.setEnabled(true);
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        btnCancelar.setEnabled(true);
+
+        txtNome.setEnabled(true);
+        txtPlaca.setEditable(true);
+        txtCor.setEditable(true);
+    }
+
+    public void alterar() {
+        btnNovo.setEnabled(true);
+        btnSalvar.setEnabled(false);
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        btnCancelar.setEnabled(true);
+
+        txtNome.setEnabled(false);
+        txtPlaca.setEditable(false);
+        txtCor.setEditable(false);
+    }
+
+    public void excluir() {
+        btnNovo.setEnabled(true);
+        btnSalvar.setEnabled(false);
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        btnCancelar.setEnabled(true);
+
+        txtNome.setEnabled(false);
+        txtPlaca.setEditable(false);
+        txtCor.setEditable(false);
+    }
+
+    public void tabela() {
+        btnNovo.setEnabled(true);
+        btnSalvar.setEnabled(false);
+        btnAlterar.setEnabled(true);
+        btnExcluir.setEnabled(true);
+        btnCancelar.setEnabled(true);
+
+        txtNome.setEnabled(true);
+        txtPlaca.setEditable(true);
+        txtCor.setEditable(true);
+    }
+
+    public void limpaCampo() {
+        txtNome.setText("");
+        txtPlaca.setText("");
+        txtCor.setText("");
     }
 
     /**
@@ -66,14 +132,15 @@ public class UIVeiculos extends javax.swing.JInternalFrame implements Observer {
         jPanel1 = new javax.swing.JPanel();
         txtNome = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        txtPlaca = new javax.swing.JTextField();
-        txtCor = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        txtPlaca = new javax.swing.JFormattedTextField();
+        txtCor = new javax.swing.JFormattedTextField();
         btnSalvar = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        btnNovo = new javax.swing.JButton();
 
         tblList.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tblList.setModel(new javax.swing.table.DefaultTableModel(
@@ -110,6 +177,12 @@ public class UIVeiculos extends javax.swing.JInternalFrame implements Observer {
 
         jLabel3.setText("Cor:");
 
+        try {
+            txtPlaca.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("UUU-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -121,13 +194,13 @@ public class UIVeiculos extends javax.swing.JInternalFrame implements Observer {
                     .addComponent(jLabel1))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel2)
+                    .addComponent(txtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtCor, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCor, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addContainerGap(217, Short.MAX_VALUE))
+                .addContainerGap(234, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,6 +246,8 @@ public class UIVeiculos extends javax.swing.JInternalFrame implements Observer {
             }
         });
 
+        btnNovo.setText("Novo");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -183,10 +258,12 @@ public class UIVeiculos extends javax.swing.JInternalFrame implements Observer {
                     .addComponent(jScrollPane1)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnNovo)
+                        .addGap(18, 18, 18)
                         .addComponent(btnSalvar)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnAlterar)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnExcluir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCancelar)))
@@ -200,11 +277,12 @@ public class UIVeiculos extends javax.swing.JInternalFrame implements Observer {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
-                    .addComponent(btnAlterar)
                     .addComponent(btnExcluir)
-                    .addComponent(btnCancelar))
+                    .addComponent(btnCancelar)
+                    .addComponent(btnNovo)
+                    .addComponent(btnAlterar))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -212,10 +290,14 @@ public class UIVeiculos extends javax.swing.JInternalFrame implements Observer {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblListMouseClicked
-        preenche();
+        limpaCampo();
+        populaCampos();
+        tabela();
     }//GEN-LAST:event_tblListMouseClicked
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        limpaCampo();
+        padrao();
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -279,6 +361,7 @@ public class UIVeiculos extends javax.swing.JInternalFrame implements Observer {
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -286,9 +369,9 @@ public class UIVeiculos extends javax.swing.JInternalFrame implements Observer {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblList;
-    private javax.swing.JTextField txtCor;
+    private javax.swing.JFormattedTextField txtCor;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JTextField txtPlaca;
+    private javax.swing.JFormattedTextField txtPlaca;
     // End of variables declaration//GEN-END:variables
 
     @Override
