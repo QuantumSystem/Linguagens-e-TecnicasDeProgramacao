@@ -21,24 +21,6 @@ public class ControllerResidencias extends Observable{
         return dao.get(id);
     }
     
-    public DefaultTableModel getAllTable(){
-        DAOResidencias DAOResidencia = new DAOResidencias();
-        ArrayList<Residencias> residencias = 
-                (ArrayList<Residencias>) DAOResidencia.getAll();
-        DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("Código");
-        modelo.addColumn("Rua");
-        modelo.addColumn("Número");
-
-        if(residencias != null) residencias.forEach((residencia) -> {
-          modelo.addRow(new Object[] {
-              residencia.getId(),
-              residencia.getRua(),
-              residencia.getNumero()});
-       });
-        return modelo;
-    }
-    
     public void insertResidencias(String rua, String numero) {
         DAOResidencias dao = new DAOResidencias();
         Residencias r = new Residencias();

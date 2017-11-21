@@ -28,7 +28,7 @@ public class Veiculos {
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        this.nome = nome.toUpperCase();
     }
 
     public String getPlaca() {
@@ -44,7 +44,7 @@ public class Veiculos {
     }
 
     public void setCor(String cor) {
-        this.cor = cor;
+        this.cor = cor.toUpperCase();
     }
     
     public String toString(){

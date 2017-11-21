@@ -6,11 +6,14 @@
 package View;
 
 import Controller.ControllerPessoas;
+import DAO.DAOPessoas;
 import Model.Pessoas;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -31,13 +34,21 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
             ControllerPessoas ctrlPessoas = new ControllerPessoas();
             uipessoas.setController(ctrlPessoas);
             ctrlPessoas.addObserver(uipessoas);
-            uipessoas.refreshTable();
+            uipessoas.readJTable();
         }
         return uipessoas;
     }
 
     public UIPessoas() {
         initComponents();
+        DefaultTableModel modelo = (DefaultTableModel) tblList.getModel();
+        tblList.setRowSorter(new TableRowSorter(modelo));
+        tblList.getColumnModel().getColumn(0).setPreferredWidth(10);//id
+        tblList.getColumnModel().getColumn(1).setPreferredWidth(150);//nome
+        tblList.getColumnModel().getColumn(2).setPreferredWidth(55);//rg
+        tblList.getColumnModel().getColumn(3).setPreferredWidth(55);//cpf
+        tblList.getColumnModel().getColumn(4).setPreferredWidth(55);//telefone
+        tblList.getColumnModel().getColumn(5).setPreferredWidth(70);//celular
         padrao();
     }
 
@@ -45,8 +56,21 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
         this.controller = _controller;
     }
 
-    public void refreshTable() {
-        this.tblList.setModel(this.controller.getAllTable());
+    public void readJTable() {
+        DefaultTableModel modelo = (DefaultTableModel) tblList.getModel();
+        modelo.setNumRows(0);
+        DAOPessoas pDAO = new DAOPessoas();
+
+        for (Pessoas p : pDAO.getAll()) {
+            modelo.addRow(new Object[]{
+                p.getId(),
+                p.getNome(),
+                p.getRg(),
+                p.getCpf(),
+                p.getTelefone(),
+                p.getCelular(),
+            });
+        }
     }
 
     public void preenche() {
@@ -65,10 +89,10 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
         btnCancelar.setEnabled(true);
 
         txtNome.setEnabled(false);
-        txtRg.setEditable(false);
-        txtCpf.setEditable(false);
-        txtTelefone.setEditable(false);
-        txtCelular.setEditable(false);
+        txtRg.setEnabled(false);
+        txtCpf.setEnabled(false);
+        txtTelefone.setEnabled(false);
+        txtCelular.setEnabled(false);
     }
 
     public void novo() {
@@ -79,10 +103,10 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
         btnCancelar.setEnabled(true);
 
         txtNome.setEnabled(true);
-        txtRg.setEditable(true);
-        txtCpf.setEditable(true);
-        txtTelefone.setEditable(true);
-        txtCelular.setEditable(true);
+        txtRg.setEnabled(true);
+        txtCpf.setEnabled(true);
+        txtTelefone.setEnabled(true);
+        txtCelular.setEnabled(true);
     }
 
     public void alterar() {
@@ -93,10 +117,10 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
         btnCancelar.setEnabled(true);
 
         txtNome.setEnabled(false);
-        txtRg.setEditable(false);
-        txtCpf.setEditable(false);
-        txtTelefone.setEditable(false);
-        txtCelular.setEditable(false);
+        txtRg.setEnabled(false);
+        txtCpf.setEnabled(false);
+        txtTelefone.setEnabled(false);
+        txtCelular.setEnabled(false);
     }
 
     public void excluir() {
@@ -107,10 +131,10 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
         btnCancelar.setEnabled(true);
 
         txtNome.setEnabled(false);
-        txtRg.setEditable(false);
-        txtCpf.setEditable(false);
-        txtTelefone.setEditable(false);
-        txtCelular.setEditable(false);
+        txtRg.setEnabled(false);
+        txtCpf.setEnabled(false);
+        txtTelefone.setEnabled(false);
+        txtCelular.setEnabled(false);
     }
 
     public void tabela() {
@@ -121,10 +145,10 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
         btnCancelar.setEnabled(true);
 
         txtNome.setEnabled(true);
-        txtRg.setEditable(true);
-        txtCpf.setEditable(true);
-        txtTelefone.setEditable(true);
-        txtCelular.setEditable(true);
+        txtRg.setEnabled(true);
+        txtCpf.setEnabled(true);
+        txtTelefone.setEnabled(true);
+        txtCelular.setEnabled(true);
     }
 
     public void limpaCampo() {
@@ -195,11 +219,11 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Cadastro de Pessoas"));
 
-        jLabel1.setText("Nome: *");
+        jLabel1.setText("NOME: *");
 
-        jLabel4.setText("Telefone:");
+        jLabel4.setText("TELEFONE:");
 
-        jLabel5.setText("Celular:");
+        jLabel5.setText("CELULAR:");
 
         jLabel2.setText("RG:");
 
@@ -369,6 +393,7 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         limpaCampo();
         padrao();
+        tblList.getSelectionModel().clearSelection();//Desfaz uma seleção da tabela
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -382,7 +407,7 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
                 controller.insertPessoas(txtNome.getText(), txtRg.getText(), txtCpf.getText(), txtTelefone.getText(), txtCelular.getText());
                 limpaCampo();
                 padrao();
-                refreshTable();
+                readJTable();
                 JOptionPane.showMessageDialog(rootPane, "Salvo com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE, info);
             } else {
                 this.pessoas.setNome(txtNome.getText());
@@ -393,7 +418,6 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
                 controller.updatePessoas(this.pessoas);
                 JOptionPane.showMessageDialog(null, "Erro");
             }
-            //refreshTable();
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -415,7 +439,7 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
 
             controller.updatePessoas(this.pessoas);
             limpaCampo();
-            refreshTable();
+            readJTable();
             alterar();
             JOptionPane.showMessageDialog(rootPane, "Alterado com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE, info);
         }
@@ -431,10 +455,10 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
         }
         int id = (int) this.tblList.getValueAt(selected, 0);
         String nome = (String) this.tblList.getValueAt(selected, 1);
-        int x = JOptionPane.showConfirmDialog(rootPane, "Deseja deletar o : " + nome + " ?", "ATENÇÃO", JOptionPane.OK_CANCEL_OPTION, HEIGHT, warning);
+        int x = JOptionPane.showConfirmDialog(rootPane, "Deseja deletar : " + nome + " ?", "ATENÇÃO", JOptionPane.OK_CANCEL_OPTION, HEIGHT, warning);
         if (x == 0) {
             this.controller.deletaPessoas(id);
-            this.refreshTable();
+            readJTable();
             limpaCampo();
             excluir();
             JOptionPane.showMessageDialog(rootPane, "Deletado com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE, info);
@@ -448,11 +472,12 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         limpaCampo();
         novo();
+        tblList.getSelectionModel().clearSelection();//Desfaz uma seleção da tabela
     }//GEN-LAST:event_btnNovoActionPerformed
 
     @Override
     public void update(Observable o, Object arg) {
-        this.refreshTable();
+        readJTable();
     }
 
 

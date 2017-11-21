@@ -15,6 +15,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
+import java.awt.Image;
+import java.awt.Graphics;
 
 /**
  *
@@ -29,10 +31,9 @@ public class Principal extends javax.swing.JFrame {
      */
     public Principal() {
         initComponents();
-        //centralizado
-        setLocationRelativeTo(null);
-        //maximizado
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
+       
+        setLocationRelativeTo(null); //centralizado
+        setExtendedState(JFrame.MAXIMIZED_BOTH);//maximizado
         this.gerenteDeJanelas = new GerenteDeJanelas(jDesktopPane1);
 
         //data
@@ -54,7 +55,6 @@ public class Principal extends javax.swing.JFrame {
                 SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss a");
                 txtHora.setText("Hora: " + sdf.format(data));
             }
-
         }
         ).start();
     }
@@ -68,7 +68,13 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jDesktopPane1 = new javax.swing.JDesktopPane();
+        ImageIcon icon = new ImageIcon(getClass().getResource("/img/fundo.jpg"));
+        Image image = icon.getImage();
+        jDesktopPane1 = new javax.swing.JDesktopPane(){
+            public void paintComponent(Graphics g){
+                g.drawImage(image,0,0,getWidth(),getHeight(),this);
+            }
+        };
         jPanel1 = new javax.swing.JPanel();
         txtData = new javax.swing.JLabel();
         txtHora = new javax.swing.JLabel();

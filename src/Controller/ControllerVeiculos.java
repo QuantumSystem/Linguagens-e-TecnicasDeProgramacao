@@ -21,27 +21,7 @@ public class ControllerVeiculos extends Observable{
         return dao.get(id);
     }
     
-    public DefaultTableModel getAllTable(){
-        DAOVeiculos daov = new DAOVeiculos();
-        ArrayList<Veiculos> veiculos = 
-                (ArrayList<Veiculos>) daov.getAll();
-        DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("Código");
-        modelo.addColumn("Nome do Veículo");
-        modelo.addColumn("Placa");
-        modelo.addColumn("Cor");
-
-        if(veiculos != null) veiculos.forEach((veiculo) -> {
-          modelo.addRow(new Object[] {
-              veiculo.getId(),
-              veiculo.getNome(),
-              veiculo.getPlaca(),
-              veiculo.getCor()});
-       });
-        return modelo;
-    }
-    
-    public void insertPessoas(String nome, String placa, String cor) {
+    public void insertVeiculos(String nome, String placa, String cor) {
         DAOVeiculos dao = new DAOVeiculos();
         Veiculos v = new Veiculos();
         v.setNome(nome);

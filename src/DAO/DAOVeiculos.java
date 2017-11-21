@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -64,6 +66,7 @@ public class DAOVeiculos {
     }
      
     public int insertVeiculos(Veiculos veiculos) {
+        ImageIcon error = new ImageIcon("src/img/error.png");
         Connection conn = ConnectionFactory.getConnection();
         if (conn == null) return -2;
         try {
@@ -76,7 +79,8 @@ public class DAOVeiculos {
             System.out.println(veiculos.getNome() + " inserido com sucesso!!");
          } 
         catch (SQLException ex) {
-            System.out.println("Statement :" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Já existe uma placa com este número!", "ERRO!", JOptionPane.ERROR_MESSAGE, error);
+            System.out.println("Erro :" + ex.getMessage());
             return -1;
         }
         return 1;

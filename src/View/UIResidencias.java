@@ -13,6 +13,7 @@ import java.util.Observer;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -35,13 +36,18 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
             ControllerResidencias ctrlResidencias = new ControllerResidencias();
             uiresidencias.setController(ctrlResidencias);
             ctrlResidencias.addObserver(uiresidencias);
-            uiresidencias.refreshTable();
+            uiresidencias.readJTable();
         }
         return uiresidencias;
     }
 
     public UIResidencias() {
         initComponents();
+        DefaultTableModel modelo = (DefaultTableModel) tblList.getModel();
+        tblList.setRowSorter(new TableRowSorter(modelo));
+        tblList.getColumnModel().getColumn(0).setPreferredWidth(15);
+        tblList.getColumnModel().getColumn(1).setPreferredWidth(170);
+        tblList.getColumnModel().getColumn(2).setPreferredWidth(15);
         padrao();
     }
 
@@ -49,8 +55,18 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
         this.controller = _controller;
     }
 
-    public void refreshTable() {
-        this.tblList.setModel(this.controller.getAllTable());
+    public void readJTable() {
+        DefaultTableModel modelo = (DefaultTableModel) tblList.getModel();
+        modelo.setNumRows(0);
+        DAOResidencias rDAO = new DAOResidencias();
+
+        for (Residencias p : rDAO.getAll()) {
+            modelo.addRow(new Object[]{
+                p.getId(),
+                p.getRua(),
+                p.getNumero(),
+            });
+        }
     }
 
     public void setResidencia(Residencias r) {
@@ -59,12 +75,6 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
             this.txtRua.setText(r.getRua());
             this.txtNumero.setText(String.valueOf(r.getNumero()));
         }
-    }
-
-    public void readJTable() {
-        DefaultTableModel modelo = (DefaultTableModel) tblList.getModel();
-        modelo.setNumRows(0);
-        DAOResidencias r = new DAOResidencias();
     }
 
     public void populaTabela() {
@@ -77,10 +87,10 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
         btnSalvar.setEnabled(false);
         btnAlterar.setEnabled(false);
         btnExcluir.setEnabled(false);
-        btnCalcelar.setEnabled(true);
+        btnCancelar.setEnabled(true);
 
         txtRua.setEnabled(false);
-        txtNumero.setEditable(false);
+        txtNumero.setEnabled(false);
     }
 
     public void novo() {
@@ -88,10 +98,10 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
         btnSalvar.setEnabled(true);
         btnAlterar.setEnabled(false);
         btnExcluir.setEnabled(false);
-        btnCalcelar.setEnabled(true);
+        btnCancelar.setEnabled(true);
 
         txtRua.setEnabled(true);
-        txtNumero.setEditable(true);
+        txtNumero.setEnabled(true);
     }
 
     public void alterar() {
@@ -99,10 +109,10 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
         btnSalvar.setEnabled(false);
         btnAlterar.setEnabled(false);
         btnExcluir.setEnabled(false);
-        btnCalcelar.setEnabled(true);
+        btnCancelar.setEnabled(true);
 
         txtRua.setEnabled(false);
-        txtNumero.setEditable(false);
+        txtNumero.setEnabled(false);
     }
 
     public void excluir() {
@@ -110,10 +120,10 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
         btnSalvar.setEnabled(false);
         btnAlterar.setEnabled(false);
         btnExcluir.setEnabled(false);
-        btnCalcelar.setEnabled(true);
+        btnCancelar.setEnabled(true);
 
         txtRua.setEnabled(false);
-        txtNumero.setEditable(false);
+        txtNumero.setEnabled(false);
     }
 
     public void tabela() {
@@ -121,10 +131,10 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
         btnSalvar.setEnabled(false);
         btnAlterar.setEnabled(true);
         btnExcluir.setEnabled(true);
-        btnCalcelar.setEnabled(true);
+        btnCancelar.setEnabled(true);
 
         txtRua.setEnabled(true);
-        txtNumero.setEditable(true);
+        txtNumero.setEnabled(true);
     }
 
     public void limpaCampo() {
@@ -148,7 +158,7 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
         btnSalvar = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
-        btnCalcelar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtNumero = new javax.swing.JFormattedTextField();
@@ -162,11 +172,11 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "ENDEREÇO", "NÚMERO"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -206,16 +216,16 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
             }
         });
 
-        btnCalcelar.setText("Cancelar");
-        btnCalcelar.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCalcelarActionPerformed(evt);
+                btnCancelarActionPerformed(evt);
             }
         });
 
-        jLabel1.setText("Rua: *");
+        jLabel1.setText("ENDEREÇO: *");
 
-        jLabel2.setText("Numero: *");
+        jLabel2.setText("NÚMERO: *");
 
         txtNumero.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
@@ -233,7 +243,7 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtRua, javax.swing.GroupLayout.DEFAULT_SIZE, 543, Short.MAX_VALUE)
+                    .addComponent(txtRua, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -246,17 +256,13 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
                                 .addGap(18, 18, 18)
                                 .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(34, 34, 34)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(jLabel2)
-                        .addGap(31, 31, 31))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnCalcelar, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtNumero, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(txtNumero, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -274,7 +280,7 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
                     .addComponent(btnAlterar)
                     .addComponent(btnExcluir)
                     .addComponent(btnSalvar)
-                    .addComponent(btnCalcelar)
+                    .addComponent(btnCancelar)
                     .addComponent(btnNovo))
                 .addContainerGap())
         );
@@ -307,13 +313,13 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
         ImageIcon warning = new ImageIcon("src/img/warning.png");
         ImageIcon info = new ImageIcon("src/img/info.png");
         if (txtRua.getText().trim().equals("")) {
-            JOptionPane.showMessageDialog(rootPane, "Campo RUA : Obrigatório!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE, warning);
+            JOptionPane.showMessageDialog(rootPane, "Campo ENDEREÇO : Obrigatório!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE, warning);
         } else if (txtNumero.getText().equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Campo NÚMERO: Obrigatório!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE, warning);
         } else {
             if (this.residencias == null) {
                 controller.insertResidencias(txtRua.getText(), txtNumero.getText());
-                refreshTable();
+                readJTable();
                 limpaCampo();
                 padrao();
                 JOptionPane.showMessageDialog(rootPane, "Salvo com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE, info);
@@ -342,9 +348,9 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
 
             controller.updateResidencias(this.residencias);
             limpaCampo();
-            refreshTable();
+            readJTable();
             alterar();
-            JOptionPane.showMessageDialog(rootPane, "Alterado com sucesso! com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE, info);
+            JOptionPane.showMessageDialog(rootPane, "Alterado com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE, info);
         }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
@@ -359,21 +365,22 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
         int id = (int) this.tblList.getValueAt(selected, 0);
         String rua = (String) this.tblList.getValueAt(selected, 1);
         String numero = (String) this.tblList.getValueAt(selected, 2);
-        int x = JOptionPane.showConfirmDialog(rootPane, "Deseja deletar " + rua + " - " + numero + " ?", "ATENÇÃO", JOptionPane.OK_CANCEL_OPTION, HEIGHT, warning);
+        int x = JOptionPane.showConfirmDialog(rootPane, "Deseja deletar: " + rua + " - Número: " + numero + " ?", "ATENÇÃO", JOptionPane.OK_CANCEL_OPTION, HEIGHT, warning);
         if (x == 0) {
             this.controller.deletaResidencias(id);
-            this.refreshTable();
+            readJTable();
             limpaCampo();
             excluir();
             JOptionPane.showMessageDialog(rootPane, "Deletado com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE, info);
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
-    private void btnCalcelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcelarActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         limpaCampo();
         padrao();
+        tblList.getSelectionModel().clearSelection();//Desfaz uma seleção da tabela
         this.dispose();
-    }//GEN-LAST:event_btnCalcelarActionPerformed
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void tblListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblListMouseClicked
         limpaCampo();
@@ -388,12 +395,13 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         limpaCampo();
         novo();
+        tblList.getSelectionModel().clearSelection();//Desfaz uma seleção da tabela
     }//GEN-LAST:event_btnNovoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
-    private javax.swing.JButton btnCalcelar;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnSalvar;
@@ -408,6 +416,6 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
 
     @Override
     public void update(Observable o, Object arg) {
-        this.refreshTable();
+        readJTable();
     }
 }

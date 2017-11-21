@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -62,6 +64,7 @@ public class DAOResidencias {
     }
      
     public int insertResidencia(Residencias residencias) {
+        ImageIcon error = new ImageIcon("src/img/error.png");
         Connection conn = ConnectionFactory.getConnection();
         if (conn == null) return -2;
         try {
@@ -73,7 +76,8 @@ public class DAOResidencias {
             System.out.println(residencias.getRua() +  " - " + residencias.getNumero() + " inserido com sucesso!!");
          } 
         catch (SQLException ex) {
-            System.out.println("Statement :" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Já existe uma residência com este número!", "ERRO!", JOptionPane.ERROR_MESSAGE, error);
+            System.out.println("Erro :" + ex.getMessage());
             return -1;
         }
         return 1;

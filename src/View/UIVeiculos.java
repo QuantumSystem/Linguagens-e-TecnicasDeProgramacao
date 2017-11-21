@@ -6,16 +6,21 @@
 package View;
 
 import Controller.ControllerVeiculos;
+import DAO.DAOVeiculos;
 import Model.Veiculos;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
  * @author tiago
  */
 public class UIVeiculos extends javax.swing.JInternalFrame implements Observer {
+
     private static UIVeiculos uiveiculos;
     private ControllerVeiculos controller;
     private Veiculos veiculos = null;
@@ -29,21 +34,39 @@ public class UIVeiculos extends javax.swing.JInternalFrame implements Observer {
             ControllerVeiculos ctrlVeiculos = new ControllerVeiculos();
             uiveiculos.setController(ctrlVeiculos);
             ctrlVeiculos.addObserver(uiveiculos);
-            uiveiculos.refreshTable();
+            uiveiculos.readJTable();
         }
         return uiveiculos;
     }
-    
+
     public UIVeiculos() {
         initComponents();
+        DefaultTableModel modelo = (DefaultTableModel) tblList.getModel();
+        tblList.setRowSorter(new TableRowSorter(modelo));
+        tblList.getColumnModel().getColumn(0).setPreferredWidth(10);//id
+        tblList.getColumnModel().getColumn(1).setPreferredWidth(150);//nome
+        tblList.getColumnModel().getColumn(2).setPreferredWidth(25);//placa
+        tblList.getColumnModel().getColumn(3).setPreferredWidth(50);//cor
+        padrao();
     }
 
     public void setController(ControllerVeiculos _controller) {
         this.controller = _controller;
     }
 
-    public void refreshTable() {
-        this.tblList.setModel(this.controller.getAllTable());
+    public void readJTable() {
+        DefaultTableModel modelo = (DefaultTableModel) tblList.getModel();
+        modelo.setNumRows(0);
+        DAOVeiculos vDAO = new DAOVeiculos();
+
+        for (Veiculos p : vDAO.getAll()) {
+            modelo.addRow(new Object[]{
+                p.getId(),
+                p.getNome(),
+                p.getPlaca(),
+                p.getCor(),
+            });
+        }
     }
 
     public void populaCampos() {
@@ -51,7 +74,7 @@ public class UIVeiculos extends javax.swing.JInternalFrame implements Observer {
         txtPlaca.setText(tblList.getValueAt(tblList.getSelectedRow(), 2).toString());
         txtCor.setText(tblList.getValueAt(tblList.getSelectedRow(), 3).toString());
     }
-    
+
     public void padrao() {
         btnNovo.setEnabled(true);
         btnSalvar.setEnabled(false);
@@ -60,8 +83,8 @@ public class UIVeiculos extends javax.swing.JInternalFrame implements Observer {
         btnCancelar.setEnabled(true);
 
         txtNome.setEnabled(false);
-        txtPlaca.setEditable(false);
-        txtCor.setEditable(false);
+        txtPlaca.setEnabled(false);
+        txtCor.setEnabled(false);
     }
 
     public void novo() {
@@ -72,8 +95,8 @@ public class UIVeiculos extends javax.swing.JInternalFrame implements Observer {
         btnCancelar.setEnabled(true);
 
         txtNome.setEnabled(true);
-        txtPlaca.setEditable(true);
-        txtCor.setEditable(true);
+        txtPlaca.setEnabled(true);
+        txtCor.setEnabled(true);
     }
 
     public void alterar() {
@@ -84,8 +107,8 @@ public class UIVeiculos extends javax.swing.JInternalFrame implements Observer {
         btnCancelar.setEnabled(true);
 
         txtNome.setEnabled(false);
-        txtPlaca.setEditable(false);
-        txtCor.setEditable(false);
+        txtPlaca.setEnabled(false);
+        txtCor.setEnabled(false);
     }
 
     public void excluir() {
@@ -96,8 +119,8 @@ public class UIVeiculos extends javax.swing.JInternalFrame implements Observer {
         btnCancelar.setEnabled(true);
 
         txtNome.setEnabled(false);
-        txtPlaca.setEditable(false);
-        txtCor.setEditable(false);
+        txtPlaca.setEnabled(false);
+        txtCor.setEnabled(false);
     }
 
     public void tabela() {
@@ -108,8 +131,8 @@ public class UIVeiculos extends javax.swing.JInternalFrame implements Observer {
         btnCancelar.setEnabled(true);
 
         txtNome.setEnabled(true);
-        txtPlaca.setEditable(true);
-        txtCor.setEditable(true);
+        txtPlaca.setEnabled(true);
+        txtCor.setEnabled(true);
     }
 
     public void limpaCampo() {
@@ -148,7 +171,7 @@ public class UIVeiculos extends javax.swing.JInternalFrame implements Observer {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "NOME/MODELO", "PLACA", "COR"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -171,11 +194,11 @@ public class UIVeiculos extends javax.swing.JInternalFrame implements Observer {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Cadastro de Veículos"));
 
-        jLabel1.setText("Nome do Veículo: ");
+        jLabel1.setText("NOME/MODELO: *");
 
-        jLabel2.setText("Placa:");
+        jLabel2.setText("PLACA:");
 
-        jLabel3.setText("Cor:");
+        jLabel3.setText("COR:");
 
         try {
             txtPlaca.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("UUU-####")));
@@ -247,6 +270,11 @@ public class UIVeiculos extends javax.swing.JInternalFrame implements Observer {
         });
 
         btnNovo.setText("Novo");
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -298,28 +326,39 @@ public class UIVeiculos extends javax.swing.JInternalFrame implements Observer {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         limpaCampo();
         padrao();
+        tblList.getSelectionModel().clearSelection();//Desfaz uma seleção da tabela
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        if (this.veiculos == null) {
-            controller.insertPessoas(txtNome.getText(), txtPlaca.getText(), txtCor.getText());
-            JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!!");
+        ImageIcon warning = new ImageIcon("src/img/warning.png");
+        ImageIcon info = new ImageIcon("src/img/info.png");
+        if (txtNome.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Campo NOME : Obrigatório!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE, warning);
         } else {
-            this.veiculos.setNome(txtNome.getText());
-            this.veiculos.setPlaca(txtPlaca.getText());
-            this.veiculos.setCor(txtCor.getText());
+            if (this.veiculos == null) {
+                controller.insertVeiculos(txtNome.getText(), txtPlaca.getText(), txtCor.getText());
+                readJTable();
+                limpaCampo();
+                padrao();
+                JOptionPane.showMessageDialog(rootPane, "Salvo com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE, info);
+            } else {
+                this.veiculos.setNome(txtNome.getText());
+                this.veiculos.setPlaca(txtPlaca.getText());
+                this.veiculos.setCor(txtCor.getText());
 
-            controller.updateVeiculos(this.veiculos);
-            //JOptionPane.showMessageDialog(null, "2");
+                controller.updateVeiculos(this.veiculos);
+                JOptionPane.showMessageDialog(null, "Erro");
+            }
         }
-        refreshTable();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        ImageIcon warning = new ImageIcon("src/img/warning.png");
+        ImageIcon info = new ImageIcon("src/img/info.png");
         int selected = this.tblList.getSelectedRow();
         if (selected < 0) {
-            JOptionPane.showMessageDialog(this, "Selecione um registro");
+             JOptionPane.showMessageDialog(rootPane, "Selecione um registo!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE, warning);
         } else {
             int id = (int) this.tblList.getValueAt(selected, 0);
             this.veiculos = new Veiculos();
@@ -329,32 +368,43 @@ public class UIVeiculos extends javax.swing.JInternalFrame implements Observer {
             this.veiculos.setCor(txtCor.getText());
 
             controller.updateVeiculos(this.veiculos);
-            //JOptionPane.showMessageDialog(null, "2");
-
-            refreshTable();
+            limpaCampo();
+            readJTable();
+            alterar();
+            JOptionPane.showMessageDialog(rootPane, "Alterado com sucesso! com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE, info);
         }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        ImageIcon warning = new ImageIcon("src/img/warning.png");
+        ImageIcon info = new ImageIcon("src/img/info.png");
         int selected = this.tblList.getSelectedRow();
         if (selected < 0) {
-            JOptionPane.showMessageDialog(this, "Selecione um registro");
+            JOptionPane.showMessageDialog(rootPane, "Selecione um registro!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE, warning);
             return;
         }
         int id = (int) this.tblList.getValueAt(selected, 0);
         String nome = (String) this.tblList.getValueAt(selected, 1);
-        int x = JOptionPane.showConfirmDialog(
-                this, "Deseja deletar " + nome + " ?", "Atenção",
-                JOptionPane.OK_CANCEL_OPTION);
+        String placa = (String) this.tblList.getValueAt(selected, 2);
+        int x = JOptionPane.showConfirmDialog(rootPane, "Deseja deletar: " + nome + " -  Placa: " + placa + " ?", "ATENÇÃO", JOptionPane.OK_CANCEL_OPTION, HEIGHT, warning);
         if (x == 0) {
             this.controller.deletaVeiculos(id);
-            this.refreshTable();
+            readJTable();
+            limpaCampo();
+            excluir();
+            JOptionPane.showMessageDialog(rootPane, "Deletado com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE, info);
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void clica(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clica
         this.tblList.editingCanceled(null);
     }//GEN-LAST:event_clica
+
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        limpaCampo();
+        novo();
+        tblList.getSelectionModel().clearSelection();//Desfaz uma seleção da tabela
+    }//GEN-LAST:event_btnNovoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -376,6 +426,6 @@ public class UIVeiculos extends javax.swing.JInternalFrame implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        this.refreshTable();
+        readJTable();
     }
 }

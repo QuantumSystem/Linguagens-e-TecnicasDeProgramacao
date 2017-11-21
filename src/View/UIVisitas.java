@@ -13,6 +13,7 @@ import DAO.ConnectionFactory;
 import DAO.DAOPessoas;
 import DAO.DAOResidencias;
 import DAO.DAOVeiculos;
+import DAO.DAOVisitas;
 import Model.Pessoas;
 import Model.Residencias;
 import Model.Veiculos;
@@ -24,6 +25,8 @@ import java.util.Observable;
 import java.util.Observer;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -51,19 +54,26 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
             ControllerVisitas ctrlVisitas = new ControllerVisitas();
             uivisitas.setController(ctrlPessoas, ctrlResidencias, ctrlVeiculos, ctrlVisitas);
             ctrlVisitas.addObserver(uivisitas);
-            uivisitas.refreshTable();
+            uivisitas.readJTable();
         }
         return uivisitas;
     }
 
     public UIVisitas() {
         initComponents();
-        //Combo Residencias
-        loadCmbResidencias();
-        //Combo Pessoas
-        loadCmbPessoas();
-        //Combo Veiculos
-        loadCmbVeiculos();
+        DefaultTableModel modelo = (DefaultTableModel) tblList3.getModel();
+        tblList3.setRowSorter(new TableRowSorter(modelo));
+        tblList3.getColumnModel().getColumn(0).setPreferredWidth(15);//id
+        tblList3.getColumnModel().getColumn(1).setPreferredWidth(15);//residencia
+        tblList3.getColumnModel().getColumn(2).setPreferredWidth(15);//morador
+        tblList3.getColumnModel().getColumn(3).setPreferredWidth(15);//veiculo
+        tblList3.getColumnModel().getColumn(4).setPreferredWidth(140);//entrada
+        tblList3.getColumnModel().getColumn(5).setPreferredWidth(140);//saida
+        padrao();
+
+        loadCmbResidencias();//Combo Residencias
+        loadCmbPessoas();//Combo Pessoas
+        loadCmbVeiculos();//Combo Veiculos
     }
 
     public void setController(ControllerPessoas _ctrlPessoas, ControllerResidencias _ctrlResidencias, ControllerVeiculos _ctrlVeiculos, ControllerVisitas _ctrlVisitas) {
@@ -73,8 +83,20 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
         this.ctrlVisitas = _ctrlVisitas;
     }
 
-    public void refreshTable() {
-        this.tblList3.setModel(this.ctrlVisitas.getAllTable());
+    public void readJTable() {
+        DefaultTableModel modelo = (DefaultTableModel) tblList3.getModel();
+        modelo.setNumRows(0);
+        DAOVisitas vDAO = new DAOVisitas();
+
+        for (Visitas p : vDAO.getAll()) {
+            modelo.addRow(new Object[]{
+                p.getId(),
+                p.getResidencias_id(),
+                p.getPessoas_id(),
+                p.getVeiculos_id(),
+                p.getEntrada(),
+                p.getSaida()});
+        }
     }
 
     //Combo Residencias
@@ -141,8 +163,64 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
         }
     }
 
-    public void preenche() {
+    public void padrao() {
+        btnNovo.setEnabled(true);
+        btnSalvar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        btnSaida.setEnabled(false);
+        btnRelatorio.setEnabled(true);
+        btnCancelar.setEnabled(true);
+
+        cmbResidencia.setEnabled(false);
+        cmbPessoas.setEnabled(false);
+        cmbVeiculos.setEnabled(false);
+    }
+
+    public void novo() {
+        btnNovo.setEnabled(false);
+        btnSalvar.setEnabled(true);
+        btnExcluir.setEnabled(false);
+        btnSaida.setEnabled(false);
+        btnRelatorio.setEnabled(false);
+        btnCancelar.setEnabled(true);
+
+        cmbResidencia.setEnabled(true);
+        cmbPessoas.setEnabled(true);
+        cmbVeiculos.setEnabled(true);
+    }
+
+    public void excluir() {
+        btnNovo.setEnabled(true);
+        btnSalvar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        btnSaida.setEnabled(false);
+        btnRelatorio.setEnabled(true);
+        btnCancelar.setEnabled(true);
+
+        cmbResidencia.setEnabled(false);
+        cmbPessoas.setEnabled(false);
+        cmbVeiculos.setEnabled(false);
+    }
+
+    public void tabela() {
+        btnNovo.setEnabled(true);
+        btnSalvar.setEnabled(false);
+        btnExcluir.setEnabled(true);
+        btnRelatorio.setEnabled(false);
+        btnSaida.setEnabled(true);
+        btnCancelar.setEnabled(true);
+
+        cmbResidencia.setEnabled(true);
+        cmbPessoas.setEnabled(true);
+        cmbVeiculos.setEnabled(true);
+    }
+
+    public void populaCampos() {
         txtEntrada.setText(tblList3.getValueAt(tblList3.getSelectedRow(), 4).toString());
+    }
+
+    public void limpaCampos() {
+        txtEntrada.setText("");
     }
 
     /**
@@ -168,6 +246,7 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
         txtEntrada = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         btnRelatorio = new javax.swing.JButton();
+        btnNovo = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         tblList3 = new javax.swing.JTable();
         txtData = new javax.swing.JLabel();
@@ -195,11 +274,11 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
             }
         });
 
-        jLabel4.setText("Residencia: *");
+        jLabel4.setText("RESIDÊNCIA: *");
 
-        jLabel5.setText("Morador: *");
+        jLabel5.setText("MORADOR: *");
 
-        jLabel6.setText("Veiculo: *");
+        jLabel6.setText("VEÍCULO: *");
 
         btnSaida.setText("Saída");
         btnSaida.addActionListener(new java.awt.event.ActionListener() {
@@ -208,12 +287,21 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
             }
         });
 
-        jLabel2.setText("Entrada:");
+        txtEntrada.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jLabel2.setText("ENTRADA:");
 
         btnRelatorio.setText("Relatório");
         btnRelatorio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRelatorioActionPerformed(evt);
+            }
+        });
+
+        btnNovo.setText("Novo");
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
             }
         });
 
@@ -223,27 +311,12 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cmbResidencia, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnSalvar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnExcluir)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnRelatorio)))
-                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSaida)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCancelar))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cmbResidencia, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addGap(20, 20, 20)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cmbPessoas, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5))
@@ -252,7 +325,23 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
                             .addComponent(cmbVeiculos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel6)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnNovo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSalvar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnExcluir)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnRelatorio)
+                        .addGap(54, 54, 54)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSaida)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCancelar)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -277,7 +366,8 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
                         .addComponent(btnCancelar)
                         .addComponent(btnSaida)
                         .addComponent(jLabel2)
-                        .addComponent(btnRelatorio)))
+                        .addComponent(btnRelatorio)
+                        .addComponent(btnNovo)))
                 .addContainerGap())
         );
 
@@ -287,11 +377,11 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "RESIDENCIA", "MORADOR", "VEÍCULO", "ENTRADA", "SAÍDA"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -338,7 +428,9 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblList3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblList3MouseClicked
-        preenche();
+        limpaCampos();
+        populaCampos();
+        tabela();
     }//GEN-LAST:event_tblList3MouseClicked
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
@@ -352,6 +444,9 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
 
         if (this.visitas == null) {
             ctrlVisitas.insertVisitas(residencias.getId(), pessoas.getId(), veiculos.getId(), dataEntrada, saida);
+            readJTable();
+            limpaCampos();
+            padrao();
             JOptionPane.showMessageDialog(rootPane, "Salvo com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE, info);
         } else {
             this.visitas.setResidencias_id(residencias.getId());
@@ -361,8 +456,6 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
 
             ctrlVisitas.updateVisitas(this.visitas);
         }
-        refreshTable();
-
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -374,15 +467,20 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
             return;
         }
         int id = (int) this.tblList3.getValueAt(selected, 0);
-        int x = JOptionPane.showConfirmDialog(rootPane, "Deseja deletar o : " + id + " ?", "ATENÇÃO", JOptionPane.OK_CANCEL_OPTION, HEIGHT, warning);
+        int x = JOptionPane.showConfirmDialog(rootPane, "Deseja deletar : " + id + " ?", "ATENÇÃO", JOptionPane.OK_CANCEL_OPTION, HEIGHT, warning);
         if (x == 0) {
             this.ctrlVisitas.deletaVisitas(id);
-            this.refreshTable();
+            readJTable();
+            limpaCampos();
+            excluir();
             JOptionPane.showMessageDialog(rootPane, "Deletado com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE, info);
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        limpaCampos();
+        padrao();
+        tblList3.getSelectionModel().clearSelection();//Desfaz uma seleção da tabela
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -391,11 +489,13 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
     }//GEN-LAST:event_clica
 
     private void btnSaidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaidaActionPerformed
+        ImageIcon warning = new ImageIcon("src/img/warning.png");
+        ImageIcon info = new ImageIcon("src/img/info.png");
         String timeStamp = new SimpleDateFormat("yyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
         txtEntrada.setText(tblList3.getValueAt(tblList3.getSelectedRow(), 4).toString());
         int selected = this.tblList3.getSelectedRow();
         if (selected < 0) {
-            JOptionPane.showMessageDialog(this, "Selecione um registro");
+            JOptionPane.showMessageDialog(rootPane, "Selecione um registro!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE, warning);
         } else {
             int id = (int) this.tblList3.getValueAt(selected, 0);
 
@@ -403,9 +503,12 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
             this.visitas.setId(id);
             this.visitas.setEntrada(txtEntrada.getText());
             this.visitas.setSaida(timeStamp);
+
             ctrlVisitas.updateVisitas(this.visitas);
-            refreshTable();
-            JOptionPane.showMessageDialog(null, "Alterado com Sucesso!!");
+            readJTable();
+            limpaCampos();
+            padrao();
+            JOptionPane.showMessageDialog(rootPane, "Salvo com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE, info);
         }
     }//GEN-LAST:event_btnSaidaActionPerformed
 
@@ -423,10 +526,17 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
         view.setVisible(true);
     }//GEN-LAST:event_btnRelatorioActionPerformed
 
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        novo();
+        limpaCampos();
+        tblList3.getSelectionModel().clearSelection();//Desfaz uma seleção da tabela
+    }//GEN-LAST:event_btnNovoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnRelatorio;
     private javax.swing.JButton btnSaida;
     private javax.swing.JButton btnSalvar;
@@ -446,6 +556,6 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        this.refreshTable();
+        readJTable();
     }
 }

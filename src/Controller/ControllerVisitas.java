@@ -7,10 +7,7 @@ package Controller;
 
 import DAO.DAOVisitas;
 import Model.Visitas;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.Observable;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -20,30 +17,6 @@ public class ControllerVisitas extends Observable{
    public Visitas getVisitas(int id) {
         DAOVisitas dao = new DAOVisitas();
         return dao.get(id);
-    }
-   
-   public DefaultTableModel getAllTable(){
-        DAOVisitas daov = new DAOVisitas();
-        ArrayList<Visitas> visitas = 
-                (ArrayList<Visitas>) daov.getAll();
-        DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("Código");
-        modelo.addColumn("ID_Residencia");
-        modelo.addColumn("ID_Morador");
-        modelo.addColumn("ID_Veiculo");
-        modelo.addColumn("Entrada");
-        modelo.addColumn("Saída");
-
-        if(visitas != null) visitas.forEach((visita) -> {
-          modelo.addRow(new Object[] {
-              visita.getId(),
-              visita.getResidencias_id(),
-              visita.getPessoas_id(),
-              visita.getVeiculos_id(),
-              visita.getEntrada(),
-              visita.getSaida()});
-       });
-        return modelo;
     }
    
    public void insertVisitas(int residencias_id, int pessoas_id, int veiculos_id, String entrada, String saida) {
