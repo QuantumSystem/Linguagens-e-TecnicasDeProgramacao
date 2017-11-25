@@ -6,6 +6,7 @@
 package View;
 
 import Util.GerenteDeJanelas;
+import com.alee.laf.WebLookAndFeel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.awt.image.ImageObserver.HEIGHT;
@@ -17,6 +18,10 @@ import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import java.awt.Image;
 import java.awt.Graphics;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -39,6 +44,8 @@ public class Principal extends javax.swing.JFrame {
         //data
         data();
         hora();
+        
+        WebLookAndFeel.install ();
     }
 
     public void data() {
@@ -143,12 +150,14 @@ public class Principal extends javax.swing.JFrame {
         jToolBar1.add(jSeparator1);
 
         btnResidencia.setBackground(new java.awt.Color(255, 255, 255));
-        btnResidencia.setText("RESIDENCIAS");
+        btnResidencia.setText("RESIDÊNCIAS");
+        btnResidencia.setToolTipText("");
         btnResidencia.setFocusable(false);
         btnResidencia.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnResidencia.setMaximumSize(new java.awt.Dimension(100, 60));
         btnResidencia.setMinimumSize(new java.awt.Dimension(100, 60));
         btnResidencia.setPreferredSize(new java.awt.Dimension(100, 60));
+        btnResidencia.setRolloverEnabled(false);
         btnResidencia.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnResidencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -258,8 +267,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVisitasActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
-        ImageIcon question = new ImageIcon("src/img/question.png");
-        int x = JOptionPane.showConfirmDialog(rootPane, "Deseja realmente Sair?", "ATENÇÃO", JOptionPane.OK_CANCEL_OPTION, HEIGHT, question);
+        int x = JOptionPane.showConfirmDialog(rootPane, "Deseja realmente Sair?", "ATENÇÃO", JOptionPane.OK_CANCEL_OPTION, HEIGHT);
         if (x == 0) {
             System.exit(0);
         }
@@ -276,7 +284,7 @@ public class Principal extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
+                if ("Windows XP".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }

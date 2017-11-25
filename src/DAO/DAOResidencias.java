@@ -7,10 +7,12 @@ package DAO;
 
 import Model.Residencias;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -64,7 +66,6 @@ public class DAOResidencias {
     }
      
     public int insertResidencia(Residencias residencias) {
-        ImageIcon error = new ImageIcon("src/img/error.png");
         Connection conn = ConnectionFactory.getConnection();
         if (conn == null) return -2;
         try {
@@ -76,7 +77,7 @@ public class DAOResidencias {
             System.out.println(residencias.getRua() +  " - " + residencias.getNumero() + " inserido com sucesso!!");
          } 
         catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Já existe uma residência com este número!", "ERRO!", JOptionPane.ERROR_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Já existe uma residência com este número!", "ERRO!", JOptionPane.ERROR_MESSAGE);
             System.out.println("Erro :" + ex.getMessage());
             return -1;
         }
@@ -114,5 +115,31 @@ public class DAOResidencias {
             return -1;
         }
         return 1;
+    }
+    
+    public List<Residencias> pesquisar(String nome){
+        Connection conn = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        ArrayList<Residencias> lista = new ArrayList<>();
+        Residencias r;
+        
+        if (conn == null) return null;
+        try {
+            stmt = conn.prepareStatement("SELECT * FROM residencias WHERE rua LIKE ?");
+            stmt.setString(1, "%"+nome+"%");
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                Residencias residencia = new Residencias();
+                residencia.setId(rs.getInt("id"));
+                residencia.setRua(rs.getString("rua"));
+                residencia.setNumero(rs.getString("numero"));
+                lista.add(residencia);
+            }
+        }
+        catch (SQLException ex) {
+            System.out.println("Statement :" + ex.getMessage());
+        }
+        return lista;
     }
 }

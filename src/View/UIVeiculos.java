@@ -331,17 +331,15 @@ public class UIVeiculos extends javax.swing.JInternalFrame implements Observer {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        ImageIcon warning = new ImageIcon("src/img/warning.png");
-        ImageIcon info = new ImageIcon("src/img/info.png");
         if (txtNome.getText().trim().equals("")) {
-            JOptionPane.showMessageDialog(rootPane, "Campo NOME : Obrigatório!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE, warning);
+            JOptionPane.showMessageDialog(rootPane, "Campo NOME : Obrigatório!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
         } else {
             if (this.veiculos == null) {
                 controller.insertVeiculos(txtNome.getText(), txtPlaca.getText(), txtCor.getText());
                 readJTable();
                 limpaCampo();
                 padrao();
-                JOptionPane.showMessageDialog(rootPane, "Salvo com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE, info);
+                JOptionPane.showMessageDialog(rootPane, "Salvo com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 this.veiculos.setNome(txtNome.getText());
                 this.veiculos.setPlaca(txtPlaca.getText());
@@ -354,11 +352,9 @@ public class UIVeiculos extends javax.swing.JInternalFrame implements Observer {
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        ImageIcon warning = new ImageIcon("src/img/warning.png");
-        ImageIcon info = new ImageIcon("src/img/info.png");
         int selected = this.tblList.getSelectedRow();
         if (selected < 0) {
-             JOptionPane.showMessageDialog(rootPane, "Selecione um registo!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE, warning);
+             JOptionPane.showMessageDialog(rootPane, "Selecione um registo!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
         } else {
             int id = (int) this.tblList.getValueAt(selected, 0);
             this.veiculos = new Veiculos();
@@ -371,28 +367,26 @@ public class UIVeiculos extends javax.swing.JInternalFrame implements Observer {
             limpaCampo();
             readJTable();
             alterar();
-            JOptionPane.showMessageDialog(rootPane, "Alterado com sucesso! com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE, info);
+            JOptionPane.showMessageDialog(rootPane, "Alterado com sucesso! com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        ImageIcon warning = new ImageIcon("src/img/warning.png");
-        ImageIcon info = new ImageIcon("src/img/info.png");
         int selected = this.tblList.getSelectedRow();
         if (selected < 0) {
-            JOptionPane.showMessageDialog(rootPane, "Selecione um registro!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE, warning);
+            JOptionPane.showMessageDialog(rootPane, "Selecione um registro!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
             return;
         }
         int id = (int) this.tblList.getValueAt(selected, 0);
         String nome = (String) this.tblList.getValueAt(selected, 1);
         String placa = (String) this.tblList.getValueAt(selected, 2);
-        int x = JOptionPane.showConfirmDialog(rootPane, "Deseja deletar: " + nome + " -  Placa: " + placa + " ?", "ATENÇÃO", JOptionPane.OK_CANCEL_OPTION, HEIGHT, warning);
+        int x = JOptionPane.showConfirmDialog(rootPane, "Deseja deletar: " + nome + " -  Placa: " + placa + " ?", "ATENÇÃO", JOptionPane.OK_CANCEL_OPTION, HEIGHT);
         if (x == 0) {
             this.controller.deletaVeiculos(id);
             readJTable();
             limpaCampo();
             excluir();
-            JOptionPane.showMessageDialog(rootPane, "Deletado com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE, info);
+            JOptionPane.showMessageDialog(rootPane, "Deletado com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 

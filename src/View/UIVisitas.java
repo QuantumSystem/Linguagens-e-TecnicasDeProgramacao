@@ -434,7 +434,6 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
     }//GEN-LAST:event_tblList3MouseClicked
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        ImageIcon info = new ImageIcon("src/img/info.png");
         String dataEntrada = new SimpleDateFormat("yyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
         String saida = null;
 
@@ -447,7 +446,7 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
             readJTable();
             limpaCampos();
             padrao();
-            JOptionPane.showMessageDialog(rootPane, "Salvo com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE, info);
+            JOptionPane.showMessageDialog(rootPane, "Salvo com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE);
         } else {
             this.visitas.setResidencias_id(residencias.getId());
             this.visitas.setPessoas_id(pessoas.getId());
@@ -459,21 +458,19 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        ImageIcon warning = new ImageIcon("src/img/warning.png");
-        ImageIcon info = new ImageIcon("src/img/info.png");
         int selected = this.tblList3.getSelectedRow();
         if (selected < 0) {
-            JOptionPane.showMessageDialog(rootPane, "Selecione um registro!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE, warning);
+            JOptionPane.showMessageDialog(rootPane, "Selecione um registro!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
             return;
         }
         int id = (int) this.tblList3.getValueAt(selected, 0);
-        int x = JOptionPane.showConfirmDialog(rootPane, "Deseja deletar : " + id + " ?", "ATENÇÃO", JOptionPane.OK_CANCEL_OPTION, HEIGHT, warning);
+        int x = JOptionPane.showConfirmDialog(rootPane, "Deseja deletar : " + id + " ?", "ATENÇÃO", JOptionPane.OK_CANCEL_OPTION, HEIGHT);
         if (x == 0) {
             this.ctrlVisitas.deletaVisitas(id);
             readJTable();
             limpaCampos();
             excluir();
-            JOptionPane.showMessageDialog(rootPane, "Deletado com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE, info);
+            JOptionPane.showMessageDialog(rootPane, "Deletado com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
@@ -489,13 +486,11 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
     }//GEN-LAST:event_clica
 
     private void btnSaidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaidaActionPerformed
-        ImageIcon warning = new ImageIcon("src/img/warning.png");
-        ImageIcon info = new ImageIcon("src/img/info.png");
         String timeStamp = new SimpleDateFormat("yyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
         txtEntrada.setText(tblList3.getValueAt(tblList3.getSelectedRow(), 4).toString());
         int selected = this.tblList3.getSelectedRow();
         if (selected < 0) {
-            JOptionPane.showMessageDialog(rootPane, "Selecione um registro!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE, warning);
+            JOptionPane.showMessageDialog(rootPane, "Selecione um registro!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
         } else {
             int id = (int) this.tblList3.getValueAt(selected, 0);
 
@@ -508,7 +503,7 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
             readJTable();
             limpaCampos();
             padrao();
-            JOptionPane.showMessageDialog(rootPane, "Salvo com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE, info);
+            JOptionPane.showMessageDialog(rootPane, "Salvo com sucesso!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnSaidaActionPerformed
 
