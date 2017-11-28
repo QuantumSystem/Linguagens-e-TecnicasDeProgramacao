@@ -165,6 +165,8 @@ public class UIVeiculos extends javax.swing.JInternalFrame implements Observer {
         btnCancelar = new javax.swing.JButton();
         btnNovo = new javax.swing.JButton();
 
+        setTitle("CADASTRO DE VEÍCULOS");
+
         tblList.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tblList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -192,7 +194,7 @@ public class UIVeiculos extends javax.swing.JInternalFrame implements Observer {
         });
         jScrollPane1.setViewportView(tblList);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Cadastro de Veículos"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Prencha os campos abaixo!"));
 
         jLabel1.setText("NOME/MODELO: *");
 

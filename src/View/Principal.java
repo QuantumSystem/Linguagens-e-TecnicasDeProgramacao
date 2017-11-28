@@ -6,6 +6,7 @@
 package View;
 
 import Util.GerenteDeJanelas;
+import com.alee.extended.label.WebLinkLabel;
 import com.alee.laf.WebLookAndFeel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -65,6 +66,11 @@ public class Principal extends javax.swing.JFrame {
         }
         ).start();
     }
+    
+    public void email(){
+    WebLinkLabel el = new WebLinkLabel ();
+    el.setEmailLink ( "tiagoseg@live.com" );
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -85,6 +91,7 @@ public class Principal extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         txtData = new javax.swing.JLabel();
         txtHora = new javax.swing.JLabel();
+        email = new javax.swing.JLabel();
         jToolBar1 = new javax.swing.JToolBar();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         btnResidencia = new javax.swing.JButton();
@@ -101,21 +108,23 @@ public class Principal extends javax.swing.JFrame {
         setTitle("QUANTUM SYSTEM - CONTROLE DE ACESSO");
         setBackground(new java.awt.Color(255, 255, 255));
 
-        jDesktopPane1.setBackground(new java.awt.Color(0, 102, 153));
-
         txtData.setBackground(new java.awt.Color(255, 255, 255));
-        txtData.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtData.setForeground(new java.awt.Color(0, 102, 255));
+        txtData.setFont(new java.awt.Font("Stencil", 0, 18)); // NOI18N
 
-        txtHora.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtHora.setForeground(new java.awt.Color(0, 102, 255));
+        txtHora.setFont(new java.awt.Font("Stencil", 0, 18)); // NOI18N
+
+        WebLinkLabel email = new WebLinkLabel ();
+        email.setEmailLink ( "tiagoseg@live.com" );
+        email.setText("tiagoseg@live.com");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(842, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -123,8 +132,12 @@ public class Principal extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtData, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+            .addComponent(txtData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(txtHora, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(email)
+                .addContainerGap())
         );
 
         jDesktopPane1.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -138,7 +151,7 @@ public class Principal extends javax.swing.JFrame {
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
-                .addContainerGap(596, Short.MAX_VALUE)
+                .addContainerGap(587, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -150,6 +163,7 @@ public class Principal extends javax.swing.JFrame {
         jToolBar1.add(jSeparator1);
 
         btnResidencia.setBackground(new java.awt.Color(255, 255, 255));
+        btnResidencia.setFont(new java.awt.Font("Stencil", 0, 13)); // NOI18N
         btnResidencia.setText("RESIDÊNCIAS");
         btnResidencia.setToolTipText("");
         btnResidencia.setFocusable(false);
@@ -157,7 +171,6 @@ public class Principal extends javax.swing.JFrame {
         btnResidencia.setMaximumSize(new java.awt.Dimension(100, 60));
         btnResidencia.setMinimumSize(new java.awt.Dimension(100, 60));
         btnResidencia.setPreferredSize(new java.awt.Dimension(100, 60));
-        btnResidencia.setRolloverEnabled(false);
         btnResidencia.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnResidencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -170,6 +183,7 @@ public class Principal extends javax.swing.JFrame {
         jToolBar1.add(jSeparator2);
 
         btnPessoas.setBackground(new java.awt.Color(255, 255, 255));
+        btnPessoas.setFont(new java.awt.Font("Stencil", 0, 13)); // NOI18N
         btnPessoas.setText("PESSOAS");
         btnPessoas.setFocusable(false);
         btnPessoas.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -186,6 +200,7 @@ public class Principal extends javax.swing.JFrame {
         jToolBar1.add(jSeparator3);
 
         btnVeiculos.setBackground(new java.awt.Color(255, 255, 255));
+        btnVeiculos.setFont(new java.awt.Font("Stencil", 0, 13)); // NOI18N
         btnVeiculos.setText("VEÍCULOS");
         btnVeiculos.setFocusable(false);
         btnVeiculos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -202,6 +217,7 @@ public class Principal extends javax.swing.JFrame {
         jToolBar1.add(jSeparator4);
 
         btnVisitas.setBackground(new java.awt.Color(255, 255, 255));
+        btnVisitas.setFont(new java.awt.Font("Stencil", 0, 13)); // NOI18N
         btnVisitas.setText("VISÍTAS");
         btnVisitas.setFocusable(false);
         btnVisitas.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -218,6 +234,7 @@ public class Principal extends javax.swing.JFrame {
         jToolBar1.add(jSeparator5);
 
         btnSair.setBackground(new java.awt.Color(255, 255, 255));
+        btnSair.setFont(new java.awt.Font("Stencil", 0, 13)); // NOI18N
         btnSair.setText("SAIR");
         btnSair.setFocusable(false);
         btnSair.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -237,7 +254,7 @@ public class Principal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jDesktopPane1)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 1196, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -314,6 +331,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnVeiculos;
     private javax.swing.JButton btnVisitas;
+    private javax.swing.JLabel email;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JToolBar.Separator jSeparator1;

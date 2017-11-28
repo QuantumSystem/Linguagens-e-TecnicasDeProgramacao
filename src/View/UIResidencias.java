@@ -178,7 +178,7 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
         btnExcluir = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
-        setTitle("Cadastro de Residencias");
+        setTitle("CADASTRO DE RESIDÊNCIAS");
 
         tblList.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tblList.setModel(new javax.swing.table.DefaultTableModel(

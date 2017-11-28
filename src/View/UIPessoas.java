@@ -187,7 +187,7 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
         btnCancelar = new javax.swing.JButton();
         btnNovo = new javax.swing.JButton();
 
-        setTitle("Cadastro de Pessoas");
+        setTitle("CADASTRO DE PESSOAS");
 
         tblList.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tblList.setModel(new javax.swing.table.DefaultTableModel(
@@ -217,7 +217,7 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
         });
         jScrollPane1.setViewportView(tblList);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Cadastro de Pessoas"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Preencha os campos abaixo!"));
 
         jLabel1.setText("NOME: *");
 
@@ -376,7 +376,7 @@ public class UIPessoas extends javax.swing.JInternalFrame implements Observer {
                     .addComponent(btnCancelar)
                     .addComponent(btnNovo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
