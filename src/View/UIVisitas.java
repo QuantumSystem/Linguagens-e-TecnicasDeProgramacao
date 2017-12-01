@@ -24,6 +24,7 @@ import java.util.Calendar;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.ImageIcon;
+import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -37,7 +38,7 @@ import net.sf.jasperreports.view.JasperViewer;
  * @author tiago
  */
 public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
-
+    private static JDesktopPane jDesktopPane;
     private static UIVisitas uivisitas;
     private static ControllerPessoas ctrlPessoas;
     private static ControllerResidencias ctrlResidencias;
@@ -71,9 +72,7 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
         tblList3.getColumnModel().getColumn(5).setPreferredWidth(140);//saida
         padrao();
 
-        loadCmbResidencias();//Combo Residencias
-        loadCmbPessoas();//Combo Pessoas
-        loadCmbVeiculos();//Combo Veiculos
+        
     }
 
     public void setController(ControllerPessoas _ctrlPessoas, ControllerResidencias _ctrlResidencias, ControllerVeiculos _ctrlVeiculos, ControllerVisitas _ctrlVisitas) {
@@ -217,6 +216,18 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
 
     public void limpaCampos() {
         txtEntrada.setText("");
+    }
+    
+    public void loadAllCombobox(){
+        loadCmbResidencias();//Combo Residencias
+        loadCmbPessoas();//Combo Pessoas
+        loadCmbVeiculos();//Combo Veiculos
+    }
+    
+    public void removeAllCombobox(){
+        cmbResidencia.removeAllItems();
+        cmbPessoas.removeAllItems();
+        cmbVeiculos.removeAllItems();
     }
 
     /**
@@ -464,6 +475,7 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         limpaCampos();
         padrao();
+        removeAllCombobox();
         tblList3.getSelectionModel().clearSelection();//Desfaz uma seleção da tabela
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -497,6 +509,7 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         novo();
         limpaCampos();
+        loadAllCombobox();
         tblList3.getSelectionModel().clearSelection();//Desfaz uma seleção da tabela
     }//GEN-LAST:event_btnNovoActionPerformed
 

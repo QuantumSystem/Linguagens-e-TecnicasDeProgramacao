@@ -41,15 +41,14 @@ public class Principal extends javax.swing.JFrame {
     public Principal() {
         initComponents();
 
-        setLocationRelativeTo(null); //centralizado
-        setExtendedState(JFrame.MAXIMIZED_BOTH);//maximizado
+        setLocationRelativeTo(null); //Inicia janela Principal centralizado
+        setExtendedState(JFrame.MAXIMIZED_BOTH);//Inicia janela Principal maximizado
         this.gerenteDeJanelas = new GerenteDeJanelas(jDesktopPane1);
-
-        //data
-        data();
-        hora();
-        setIcon();
-        WebLookAndFeel.install();
+        
+        data();//Informa a data no rodapé
+        hora();//Informa a hora no rodapé
+        setIcon();//Ícone da janela
+        WebLookAndFeel.install();//Thema WebLaf
     }
 
     public void data() {
@@ -93,7 +92,6 @@ public class Principal extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         txtData = new javax.swing.JLabel();
         txtHora = new javax.swing.JLabel();
-        email = new javax.swing.JLabel();
         jToolBar1 = new javax.swing.JToolBar();
         btnResidencia = new javax.swing.JButton();
         btnPessoas = new javax.swing.JButton();
@@ -112,18 +110,12 @@ public class Principal extends javax.swing.JFrame {
 
         txtHora.setFont(new java.awt.Font("Tekton Pro Ext", 1, 18)); // NOI18N
 
-        WebLinkLabel email = new WebLinkLabel ();
-        email.setEmailLink ( "tiagoseg@live.com" );
-        email.setText("tiagoseg@live.com");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(email)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(920, Short.MAX_VALUE)
                 .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -131,12 +123,8 @@ public class Principal extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(txtData, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
             .addComponent(txtHora, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(email)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jDesktopPane1.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -376,7 +364,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnVeiculos;
     private javax.swing.JButton btnVisitas;
-    private javax.swing.JLabel email;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JToolBar jToolBar1;
