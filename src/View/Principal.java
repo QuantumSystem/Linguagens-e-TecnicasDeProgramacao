@@ -5,6 +5,7 @@
  */
 package View;
 
+import DAO.ConnectionFactory;
 import Util.GerenteDeJanelas;
 import com.alee.extended.label.WebLinkLabel;
 import com.alee.laf.WebLookAndFeel;
@@ -19,10 +20,12 @@ import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import java.awt.Image;
 import java.awt.Graphics;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import java.awt.Toolkit;
+import java.sql.Connection;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -37,7 +40,7 @@ public class Principal extends javax.swing.JFrame {
      */
     public Principal() {
         initComponents();
-       
+
         setLocationRelativeTo(null); //centralizado
         setExtendedState(JFrame.MAXIMIZED_BOTH);//maximizado
         this.gerenteDeJanelas = new GerenteDeJanelas(jDesktopPane1);
@@ -45,31 +48,30 @@ public class Principal extends javax.swing.JFrame {
         //data
         data();
         hora();
-        
-        WebLookAndFeel.install ();
+        setIcon();
+        WebLookAndFeel.install();
     }
 
     public void data() {
         Date data = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-        txtData.setText("Data: " + sdf.format(data));
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        txtData.setText(sdf.format(data));
     }
 
     public void hora() {
         new Timer(0, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Date data = new Date();
-                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss a");
-                txtHora.setText("Hora: " + sdf.format(data));
+                Date hora = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm a");
+                txtHora.setText(sdf.format(hora));
             }
         }
         ).start();
     }
-    
-    public void email(){
-    WebLinkLabel el = new WebLinkLabel ();
-    el.setEmailLink ( "tiagoseg@live.com" );
+
+    public void setIcon(){
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/logo.png")));
     }
 
     /**
@@ -93,15 +95,12 @@ public class Principal extends javax.swing.JFrame {
         txtHora = new javax.swing.JLabel();
         email = new javax.swing.JLabel();
         jToolBar1 = new javax.swing.JToolBar();
-        jSeparator1 = new javax.swing.JToolBar.Separator();
         btnResidencia = new javax.swing.JButton();
-        jSeparator2 = new javax.swing.JToolBar.Separator();
         btnPessoas = new javax.swing.JButton();
-        jSeparator3 = new javax.swing.JToolBar.Separator();
         btnVeiculos = new javax.swing.JButton();
-        jSeparator4 = new javax.swing.JToolBar.Separator();
         btnVisitas = new javax.swing.JButton();
-        jSeparator5 = new javax.swing.JToolBar.Separator();
+        btnRelatorio = new javax.swing.JButton();
+        btnContato = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -109,9 +108,9 @@ public class Principal extends javax.swing.JFrame {
         setBackground(new java.awt.Color(255, 255, 255));
 
         txtData.setBackground(new java.awt.Color(255, 255, 255));
-        txtData.setFont(new java.awt.Font("Stencil", 0, 18)); // NOI18N
+        txtData.setFont(new java.awt.Font("Tekton Pro Ext", 1, 18)); // NOI18N
 
-        txtHora.setFont(new java.awt.Font("Stencil", 0, 18)); // NOI18N
+        txtHora.setFont(new java.awt.Font("Tekton Pro Ext", 1, 18)); // NOI18N
 
         WebLinkLabel email = new WebLinkLabel ();
         email.setEmailLink ( "tiagoseg@live.com" );
@@ -123,21 +122,21 @@ public class Principal extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(email)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(txtData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(txtHora, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(email)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jDesktopPane1.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -151,7 +150,7 @@ public class Principal extends javax.swing.JFrame {
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
-                .addContainerGap(587, Short.MAX_VALUE)
+                .addContainerGap(599, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -159,11 +158,9 @@ public class Principal extends javax.swing.JFrame {
         jToolBar1.setBorder(null);
         jToolBar1.setFloatable(false);
 
-        jSeparator1.setBackground(new java.awt.Color(0, 153, 255));
-        jToolBar1.add(jSeparator1);
-
         btnResidencia.setBackground(new java.awt.Color(255, 255, 255));
-        btnResidencia.setFont(new java.awt.Font("Stencil", 0, 13)); // NOI18N
+        btnResidencia.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        btnResidencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/residencias.png"))); // NOI18N
         btnResidencia.setText("RESIDÊNCIAS");
         btnResidencia.setToolTipText("");
         btnResidencia.setFocusable(false);
@@ -179,11 +176,9 @@ public class Principal extends javax.swing.JFrame {
         });
         jToolBar1.add(btnResidencia);
 
-        jSeparator2.setBackground(new java.awt.Color(0, 0, 0));
-        jToolBar1.add(jSeparator2);
-
         btnPessoas.setBackground(new java.awt.Color(255, 255, 255));
-        btnPessoas.setFont(new java.awt.Font("Stencil", 0, 13)); // NOI18N
+        btnPessoas.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        btnPessoas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pessoas.png"))); // NOI18N
         btnPessoas.setText("PESSOAS");
         btnPessoas.setFocusable(false);
         btnPessoas.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -197,10 +192,10 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jToolBar1.add(btnPessoas);
-        jToolBar1.add(jSeparator3);
 
         btnVeiculos.setBackground(new java.awt.Color(255, 255, 255));
-        btnVeiculos.setFont(new java.awt.Font("Stencil", 0, 13)); // NOI18N
+        btnVeiculos.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        btnVeiculos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/car.png"))); // NOI18N
         btnVeiculos.setText("VEÍCULOS");
         btnVeiculos.setFocusable(false);
         btnVeiculos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -214,10 +209,10 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jToolBar1.add(btnVeiculos);
-        jToolBar1.add(jSeparator4);
 
         btnVisitas.setBackground(new java.awt.Color(255, 255, 255));
-        btnVisitas.setFont(new java.awt.Font("Stencil", 0, 13)); // NOI18N
+        btnVisitas.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        btnVisitas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/visitas.png"))); // NOI18N
         btnVisitas.setText("VISÍTAS");
         btnVisitas.setFocusable(false);
         btnVisitas.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -231,10 +226,41 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jToolBar1.add(btnVisitas);
-        jToolBar1.add(jSeparator5);
+
+        btnRelatorio.setBackground(new java.awt.Color(255, 255, 255));
+        btnRelatorio.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        btnRelatorio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/relatorio.png"))); // NOI18N
+        btnRelatorio.setText("RELATÓRIO");
+        btnRelatorio.setFocusable(false);
+        btnRelatorio.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnRelatorio.setMaximumSize(new java.awt.Dimension(100, 60));
+        btnRelatorio.setMinimumSize(new java.awt.Dimension(100, 60));
+        btnRelatorio.setPreferredSize(new java.awt.Dimension(100, 60));
+        btnRelatorio.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnRelatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRelatorioActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnRelatorio);
+
+        btnContato.setBackground(new java.awt.Color(255, 255, 255));
+        btnContato.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        btnContato.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/contato.png"))); // NOI18N
+        btnContato.setText("CONTATO");
+        btnContato.setFocusable(false);
+        btnContato.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnContato.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnContato.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnContatoActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnContato);
 
         btnSair.setBackground(new java.awt.Color(255, 255, 255));
-        btnSair.setFont(new java.awt.Font("Stencil", 0, 13)); // NOI18N
+        btnSair.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/sair.png"))); // NOI18N
         btnSair.setText("SAIR");
         btnSair.setFocusable(false);
         btnSair.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -290,6 +316,23 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSairActionPerformed
 
+    private void btnRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatorioActionPerformed
+        Connection conn = ConnectionFactory.getConnection();
+        String src = "src/Relatorio/relatorio_visitas.jasper";
+        JasperPrint jasperPrint = null;
+        try {
+            jasperPrint = JasperFillManager.fillReport(src, null, conn);
+        } catch (JRException ex) {
+            System.out.println("Error: " + ex);
+        }
+        JasperViewer view = new JasperViewer(jasperPrint, false);
+        view.setVisible(true);
+    }//GEN-LAST:event_btnRelatorioActionPerformed
+
+    private void btnContatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContatoActionPerformed
+        gerenteDeJanelas.abrirJanelas(UIContato.getInstancia());
+    }//GEN-LAST:event_btnContatoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -326,7 +369,9 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnContato;
     private javax.swing.JButton btnPessoas;
+    private javax.swing.JButton btnRelatorio;
     private javax.swing.JButton btnResidencia;
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnVeiculos;
@@ -334,11 +379,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel email;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JToolBar.Separator jSeparator1;
-    private javax.swing.JToolBar.Separator jSeparator2;
-    private javax.swing.JToolBar.Separator jSeparator3;
-    private javax.swing.JToolBar.Separator jSeparator4;
-    private javax.swing.JToolBar.Separator jSeparator5;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel txtData;
     private javax.swing.JLabel txtHora;

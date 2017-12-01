@@ -31,6 +31,16 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
      *
      * @return
      */
+    public UIResidencias() {
+        initComponents();
+        DefaultTableModel modelo = (DefaultTableModel) tblList.getModel();
+        tblList.setRowSorter(new TableRowSorter(modelo));
+        tblList.getColumnModel().getColumn(0).setPreferredWidth(15);
+        tblList.getColumnModel().getColumn(1).setPreferredWidth(170);
+        tblList.getColumnModel().getColumn(2).setPreferredWidth(15);
+        padrao();
+    }
+    
     public static UIResidencias getInstancia() {
         if (uiresidencias == null) {
             uiresidencias = new UIResidencias();
@@ -40,16 +50,6 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
             uiresidencias.readJTable();
         }
         return uiresidencias;
-    }
-
-    public UIResidencias() {
-        initComponents();
-        DefaultTableModel modelo = (DefaultTableModel) tblList.getModel();
-        tblList.setRowSorter(new TableRowSorter(modelo));
-        tblList.getColumnModel().getColumn(0).setPreferredWidth(15);
-        tblList.getColumnModel().getColumn(1).setPreferredWidth(170);
-        tblList.getColumnModel().getColumn(2).setPreferredWidth(15);
-        padrao();
     }
 
     public void setController(ControllerResidencias _controller) {
@@ -314,8 +314,8 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
                     .addComponent(btnNovo)
                     .addComponent(btnCancelar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -338,7 +338,7 @@ public class UIResidencias extends javax.swing.JInternalFrame implements Observe
                 this.residencias.setNumero(txtNumero.getText());
 
                 controller.updateResidencias(this.residencias);
-                JOptionPane.showMessageDialog(null, "Erro");
+                JOptionPane.showMessageDialog(rootPane, "Erro, tente novamente!", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
 
     }//GEN-LAST:event_btnSalvarActionPerformed

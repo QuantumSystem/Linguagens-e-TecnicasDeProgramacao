@@ -168,7 +168,6 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
         btnSalvar.setEnabled(false);
         btnExcluir.setEnabled(false);
         btnSaida.setEnabled(false);
-        btnRelatorio.setEnabled(true);
         btnCancelar.setEnabled(true);
 
         cmbResidencia.setEnabled(false);
@@ -181,7 +180,6 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
         btnSalvar.setEnabled(true);
         btnExcluir.setEnabled(false);
         btnSaida.setEnabled(false);
-        btnRelatorio.setEnabled(false);
         btnCancelar.setEnabled(true);
 
         cmbResidencia.setEnabled(true);
@@ -194,7 +192,6 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
         btnSalvar.setEnabled(false);
         btnExcluir.setEnabled(false);
         btnSaida.setEnabled(false);
-        btnRelatorio.setEnabled(true);
         btnCancelar.setEnabled(true);
 
         cmbResidencia.setEnabled(false);
@@ -206,7 +203,6 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
         btnNovo.setEnabled(true);
         btnSalvar.setEnabled(false);
         btnExcluir.setEnabled(true);
-        btnRelatorio.setEnabled(false);
         btnSaida.setEnabled(true);
         btnCancelar.setEnabled(true);
 
@@ -245,7 +241,6 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
         btnSaida = new javax.swing.JButton();
         txtEntrada = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        btnRelatorio = new javax.swing.JButton();
         btnNovo = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         tblList3 = new javax.swing.JTable();
@@ -293,13 +288,6 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
 
         jLabel2.setText("ENTRADA:");
 
-        btnRelatorio.setText("Relatório");
-        btnRelatorio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRelatorioActionPerformed(evt);
-            }
-        });
-
         btnNovo.setText("Novo");
         btnNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -334,9 +322,7 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
                         .addComponent(btnSalvar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnExcluir)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnRelatorio)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 190, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -349,10 +335,11 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(jLabel5)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbResidencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -367,7 +354,6 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
                         .addComponent(btnCancelar)
                         .addComponent(btnSaida)
                         .addComponent(jLabel2)
-                        .addComponent(btnRelatorio)
                         .addComponent(btnNovo)))
                 .addContainerGap())
         );
@@ -419,9 +405,9 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtData, javax.swing.GroupLayout.DEFAULT_SIZE, 14, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -508,20 +494,6 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
         }
     }//GEN-LAST:event_btnSaidaActionPerformed
 
-    private void btnRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatorioActionPerformed
-        Connection conn = ConnectionFactory.getConnection();
-        String src = "src/Relatorio/relatorio_visitas.jasper";
-        JasperPrint jasperPrint = null;
-        try {
-            jasperPrint = JasperFillManager.fillReport(src, null, conn);
-        } catch (JRException ex) {
-            System.out.println("Error: " + ex);
-        }
-
-        JasperViewer view = new JasperViewer(jasperPrint, false);
-        view.setVisible(true);
-    }//GEN-LAST:event_btnRelatorioActionPerformed
-
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         novo();
         limpaCampos();
@@ -533,7 +505,6 @@ public class UIVisitas extends javax.swing.JInternalFrame implements Observer {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnNovo;
-    private javax.swing.JButton btnRelatorio;
     private javax.swing.JButton btnSaida;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox<Pessoas> cmbPessoas;

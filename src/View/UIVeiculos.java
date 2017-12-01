@@ -348,7 +348,7 @@ public class UIVeiculos extends javax.swing.JInternalFrame implements Observer {
                 this.veiculos.setCor(txtCor.getText());
 
                 controller.updateVeiculos(this.veiculos);
-                JOptionPane.showMessageDialog(null, "Erro");
+                JOptionPane.showMessageDialog(rootPane, "Erro, tente novamente!", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnSalvarActionPerformed

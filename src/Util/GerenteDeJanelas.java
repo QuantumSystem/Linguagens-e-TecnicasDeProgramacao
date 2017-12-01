@@ -3,6 +3,7 @@ package Util;
 import java.awt.Dimension;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 
 public class GerenteDeJanelas {
 
@@ -16,7 +17,7 @@ public class GerenteDeJanelas {
         if (jInternalFrame.isVisible()) {
             jInternalFrame.toFront();
             jInternalFrame.requestFocus();
-            
+            JOptionPane.showMessageDialog(jDesktopPane, "A janela já está aberta!", "INFORMAÇÂO", JOptionPane.INFORMATION_MESSAGE);
         } else {
             jDesktopPane.add(jInternalFrame);
             jInternalFrame.setVisible(true);
