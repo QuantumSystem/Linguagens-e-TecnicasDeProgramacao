@@ -8,24 +8,23 @@ package View;
 import DAO.DAOUsuarios;
 import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
-import com.alee.laf.text.WebPasswordField;
-import com.alee.laf.text.WebTextField;
-import java.awt.Font;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author tiago
  */
-public class UILogin extends javax.swing.JFrame {
-
+public class UILogin extends javax.swing.JDialog {
+    public String login;
     /**
-     * Creates new form UILogin
+     * Creates new form UILoginTeste
      */
-    public UILogin() {
+    public UILogin(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
-         setLocationRelativeTo(null); //Inicia janela Principal centralizado
-         WebLookAndFeel.install();//Thema WebLaf
+        setLocationRelativeTo(null); //Inicia janela Principal centralizado
+        WebLookAndFeel.install();//Thema WebLaf
+        this.setDefaultCloseOperation(0);
     }
 
     /**
@@ -37,33 +36,28 @@ public class UILogin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txtlogin = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        txtSenha = new javax.swing.JPasswordField();
+        txtlogin = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        txtSenha = new javax.swing.JPasswordField();
         btnEntrar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("ENTRAR NO SISTEMA");
         setResizable(false);
 
-        txtlogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtloginActionPerformed(evt);
-            }
-        });
+        jLabel1.setText("Login:");
+
         //final WebTextField txtlogin = new WebTextField ( 15 );
         //        txtlogin.setInputPrompt ( "Digite o login..." );
         //       txtlogin.setInputPromptFont ( txtlogin.getFont ().deriveFont ( Font.ITALIC ) );
 
-        jLabel1.setText("Login:");
+        jLabel2.setText("Senha:");
 
         //final WebPasswordField txtSenha = new WebPasswordField ( 15 );
         //        txtSenha.setInputPrompt ( "Digite a senha...." );
         //        txtSenha.setHideInputPromptOnFocus ( false );
-
-        jLabel2.setText("Senha:");
 
         btnEntrar.setText("Entrar");
         WebButton btnEntrar = new WebButton ("ENTRAR");
@@ -80,47 +74,44 @@ public class UILogin extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/manager.png"))); // NOI18N
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(btnEntrar)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnCancelar))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(jLabel1)
-                            .addGap(66, 66, 66)
-                            .addComponent(jLabel3))
-                        .addComponent(txtlogin, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(txtSenha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(55, 55, 55)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel2)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnEntrar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnCancelar))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtlogin, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtSenha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(55, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtlogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addGap(2, 2, 2)
-                .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEntrar)
-                    .addComponent(btnCancelar))
-                .addContainerGap(35, Short.MAX_VALUE))
+            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(77, 77, 77)
+                    .addComponent(jLabel1)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(txtlogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addComponent(jLabel2)
+                    .addGap(2, 2, 2)
+                    .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnEntrar)
+                        .addComponent(btnCancelar))
+                    .addContainerGap(77, Short.MAX_VALUE)))
         );
 
         pack();
@@ -130,25 +121,21 @@ public class UILogin extends javax.swing.JFrame {
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
         DAOUsuarios dao = new DAOUsuarios();
         if(dao.checklogin(txtlogin.getText(), new String(txtSenha.getPassword()))){
-            new Principal().setVisible(true);
+            //new Principal().setVisible(true);
+            login = txtlogin.getText();
             this.dispose();
         }else{
-            JOptionPane.showMessageDialog(null, "Senha incorreta!");
+            JOptionPane.showMessageDialog(rootPane, "DADOS INCORRETOS!", "ATENÇÃO", JOptionPane.ERROR_MESSAGE);
+            txtlogin.setText("");
+            txtSenha.setText("");
         }
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         System.exit(0);
-         WebButton b = new WebButton ( "Simple" );
-
-
-        
+        WebButton b = new WebButton ( "Simple" );
 
     }//GEN-LAST:event_btnCancelarActionPerformed
-
-    private void txtloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtloginActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtloginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -161,7 +148,7 @@ public class UILogin extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if (" WebLookAndFeel".equals(info.getName())) {
+                if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -176,11 +163,19 @@ public class UILogin extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(UILogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new UILogin().setVisible(true);
+                UILogin dialog = new UILogin(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }
@@ -190,7 +185,6 @@ public class UILogin extends javax.swing.JFrame {
     private javax.swing.JButton btnEntrar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPasswordField txtSenha;
     private javax.swing.JTextField txtlogin;
     // End of variables declaration//GEN-END:variables

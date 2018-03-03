@@ -41,16 +41,23 @@ public class Principal extends javax.swing.JFrame {
      */
     public Principal() {
         initComponents();
+        UILogin uilogin = new UILogin(this, true);
+        uilogin.setVisible(true);
 
+        txtAdmin.setText("ADMINISTRADOR: " + uilogin.login);
         setLocationRelativeTo(null); //Inicia janela Principal centralizado
         setExtendedState(JFrame.MAXIMIZED_BOTH);//Inicia janela Principal maximizado
         this.gerenteDeJanelas = new GerenteDeJanelas(jDesktopPane1);
-        
+
         WebLookAndFeel.install();//Thema WebLaf
         data();//Informa a data no rodapé
         hora();//Informa a hora no rodapé
         setIcon();//Ícone da janela
-        
+
+    }
+
+    public void nomeDoAdmin() {
+
     }
 
     public void data() {
@@ -71,7 +78,7 @@ public class Principal extends javax.swing.JFrame {
         ).start();
     }
 
-    public void setIcon(){
+    public void setIcon() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/logo.png")));
     }
 
@@ -94,6 +101,7 @@ public class Principal extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         txtData = new javax.swing.JLabel();
         txtHora = new javax.swing.JLabel();
+        txtAdmin = new javax.swing.JLabel();
         jToolBar1 = new javax.swing.JToolBar();
         btnResidencia = new javax.swing.JButton();
         btnPessoas = new javax.swing.JButton();
@@ -118,7 +126,9 @@ public class Principal extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(920, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(txtAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -128,6 +138,9 @@ public class Principal extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(txtData, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
             .addComponent(txtHora, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jDesktopPane1.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -393,6 +406,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JLabel txtAdmin;
     private javax.swing.JLabel txtData;
     private javax.swing.JLabel txtHora;
     // End of variables declaration//GEN-END:variables

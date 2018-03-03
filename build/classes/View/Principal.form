@@ -70,7 +70,9 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="920" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="txtAdmin" min="-2" pref="268" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="txtData" min="-2" pref="145" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="txtHora" min="-2" pref="112" max="-2" attributes="0"/>
@@ -82,6 +84,10 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="txtData" pref="42" max="32767" attributes="0"/>
                   <Component id="txtHora" alignment="1" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="txtAdmin" max="32767" attributes="0"/>
+                  </Group>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -102,6 +108,8 @@
                   <Font name="Tekton Pro Ext" size="18" style="1"/>
                 </Property>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="txtAdmin">
             </Component>
           </SubComponents>
         </Container>
