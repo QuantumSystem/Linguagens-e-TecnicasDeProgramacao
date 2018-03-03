@@ -9,6 +9,7 @@ import DAO.ConnectionFactory;
 import Util.GerenteDeJanelas;
 import com.alee.extended.label.WebLinkLabel;
 import com.alee.laf.WebLookAndFeel;
+import com.alee.laf.button.WebButton;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.awt.image.ImageObserver.HEIGHT;
@@ -45,10 +46,11 @@ public class Principal extends javax.swing.JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);//Inicia janela Principal maximizado
         this.gerenteDeJanelas = new GerenteDeJanelas(jDesktopPane1);
         
+        WebLookAndFeel.install();//Thema WebLaf
         data();//Informa a data no rodapé
         hora();//Informa a hora no rodapé
         setIcon();//Ícone da janela
-        WebLookAndFeel.install();//Thema WebLaf
+        
     }
 
     public void data() {
@@ -100,6 +102,7 @@ public class Principal extends javax.swing.JFrame {
         btnRelatorio = new javax.swing.JButton();
         btnContato = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
+        btnVisitas1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("QUANTUM SYSTEM - CONTROLE DE ACESSO");
@@ -151,6 +154,7 @@ public class Principal extends javax.swing.JFrame {
         btnResidencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/residencias.png"))); // NOI18N
         btnResidencia.setText("RESIDÊNCIAS");
         btnResidencia.setToolTipText("");
+        btnResidencia.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnResidencia.setFocusable(false);
         btnResidencia.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnResidencia.setMaximumSize(new java.awt.Dimension(100, 60));
@@ -263,6 +267,23 @@ public class Principal extends javax.swing.JFrame {
         });
         jToolBar1.add(btnSair);
 
+        btnVisitas1.setBackground(new java.awt.Color(255, 255, 255));
+        btnVisitas1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        btnVisitas1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/visitas.png"))); // NOI18N
+        btnVisitas1.setText("TESTE");
+        btnVisitas1.setFocusable(false);
+        btnVisitas1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnVisitas1.setMaximumSize(new java.awt.Dimension(100, 60));
+        btnVisitas1.setMinimumSize(new java.awt.Dimension(100, 60));
+        btnVisitas1.setPreferredSize(new java.awt.Dimension(100, 60));
+        btnVisitas1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnVisitas1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVisitas1ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnVisitas1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -321,6 +342,10 @@ public class Principal extends javax.swing.JFrame {
         gerenteDeJanelas.abrirJanelas(UIContato.getInstancia());
     }//GEN-LAST:event_btnContatoActionPerformed
 
+    private void btnVisitas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisitas1ActionPerformed
+        gerenteDeJanelas.abrirJanelas(UIVisitas2.getInstancia());
+    }//GEN-LAST:event_btnVisitas1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -364,6 +389,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnVeiculos;
     private javax.swing.JButton btnVisitas;
+    private javax.swing.JButton btnVisitas1;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JToolBar jToolBar1;

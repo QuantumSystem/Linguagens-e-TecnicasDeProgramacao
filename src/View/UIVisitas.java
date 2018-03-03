@@ -9,7 +9,6 @@ import Controller.ControllerPessoas;
 import Controller.ControllerResidencias;
 import Controller.ControllerVeiculos;
 import Controller.ControllerVisitas;
-import DAO.ConnectionFactory;
 import DAO.DAOPessoas;
 import DAO.DAOResidencias;
 import DAO.DAOVeiculos;
@@ -18,20 +17,14 @@ import Model.Pessoas;
 import Model.Residencias;
 import Model.Veiculos;
 import Model.Visitas;
-import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
